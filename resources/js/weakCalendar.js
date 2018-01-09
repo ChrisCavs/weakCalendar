@@ -32,6 +32,4 @@ setup = function () {
 }
 
 
-document.ready(function () {
-  setup();
-});
+document.addEventListener('DOMContentLoaded', setup);
