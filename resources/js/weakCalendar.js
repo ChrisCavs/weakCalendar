@@ -14,7 +14,7 @@
   //add current month to top of page
   const dateMonth = monthArray[mm];
   console.log(dateMonth);
-  document.querySelector('.header-monthof').innerHTML(dateMonth);
+  document.querySelector('.header-monthof').innerHTML = dateMonth;
 
   //format timezone
   const splitDate = today.toString().split(' ');
@@ -22,13 +22,13 @@
   console.log(timeZone);
 
   //add timezone to leftside startStop
-  document.querySelector('.leftside-timezone').innerHTML(timeZone);
+  document.querySelector('.leftside-timezone').innerHTML = timeZone;
 
   //place current day in week, highlight that day
   const currentDay = splitDate[0];
   console.log(currentDay);
   currentDayTag = "." + currentDay;
-  document.querySelector(`${currentDayTag}`).style('color', '#e6eeff');
+  document.querySelector(currentDayTag).style.color = '#e6eeff';
 };
 
 
