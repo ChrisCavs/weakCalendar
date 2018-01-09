@@ -1,4 +1,4 @@
-setup = function () {
+  function setup () {
 
   //retrieve current date info
   const today = new Date();
@@ -29,7 +29,7 @@ setup = function () {
   console.log(currentDay);
   currentDayTag = "." + currentDay;
   document.querySelector(`${currentDayTag}`).style('color', '#e6eeff');
-}
+};
 
 
 document.addEventListener('DOMContentLoaded', setup);
