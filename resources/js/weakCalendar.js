@@ -1,4 +1,4 @@
-  function setup () {
+function setup () {
 
   //retrieve current date info
   const today = new Date();
