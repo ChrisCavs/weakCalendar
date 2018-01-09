@@ -23,7 +23,7 @@ function setup () {
   //place current day in week, highlight that day
   const currentDay = splitDate[0];
   currentDayTag = "." + currentDay;
-  document.querySelector(currentDayTag).style.color = '#e6eeff';
+  document.querySelector(currentDayTag).style.color = '#ff3333';
 };
 
 document.addEventListener('DOMContentLoaded', setup);
