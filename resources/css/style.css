@@ -58,7 +58,14 @@ header span {
 .date {
   padding: 24px;
 
-  border-right: 1px solid #e6eeff;
+  border-left: 1px solid #e6eeff;
+}
+.rightside-content {
+  display: flex;
+  justify-content: space-between;
+}
+.rightside-content-containers {
+  border-bottom: 1px solid #e6eeff;
 }
 
 /*=====FOOTER=====*/
