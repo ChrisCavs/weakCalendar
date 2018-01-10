@@ -7,14 +7,16 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900" rel="stylesheet">
     <link href="resources/css/reset.css" rel="stylesheet" type="text/css">
     <link href="resources/css/style.css" rel="stylesheet" type="text/css">
-    <script defer src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>
     <script type="text/javascript" src="./resources/js/weakCalendar.js"></script>
   </head>
   <body>
     <header>
       <h1 class="header-title"><span>weak</span>Calendar</h1>
-      <h1 class="header-monthof"></h1>
-      <button class="header-add" onclick=""><i class="fas fa-plus"></i></button>
+      <div class="header-right">
+        <button onclick="" class="minus-month"><</button>
+        <h1 class="header-monthof"></h1>
+        <button onclick="" class="plus-month">></button>
+      </div>
     </header>
     <div class="content">
       <div class="leftside">
@@ -48,8 +50,14 @@
     </div>
 
     <footer>
-      <p class="madein">Made in Notepad...</p>
-      <p>By Chris Cavs</p>
+      <div class="week-buttons">
+          <button onclick="" class="minus-week"><</button>
+          <button onclick="" class="plus-week">></button>
+      </div>
+      <div class="footer-text">
+        <p class="madein">Made in Notepad...</p>
+        <p>By Chris Cavs</p>
+      <div>
     </footer>
   </body>
 </html>

@@ -25,11 +25,14 @@ function setup () {
   const currentDay = splitDate[0]; // as in mon, tue, wed
   const dateDay = splitDate[2] // as in 01, 21, 30
   currentDayTag = "." + currentDay;
-  document.querySelector(currentDayTag).style.color = '#ff3333';
+  document.querySelector(currentDayTag).parentElement.style.color = '#ff3333';
 
   //assign date-day to rightside-dates
   const dateDayIndex = weekArray.indexOf(currentDay);
-  document.querySelectorAll('.rightside-dates span').forEach(day => this.innerHTML = dateDay + (weekArray.indexOf(this.classList) - dateDayIndex));
-};
+  document.querySelectorAll('.rightside-dates span').forEach(day => {
+    let thisDate = (dateDay*1) + (weekArray.indexOf(day.classList.value) - dateDayIndex);
+    day.innerHTML = thisDate;
+  });
+}
 
 document.addEventListener('DOMContentLoaded', setup);
