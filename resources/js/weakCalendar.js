@@ -28,13 +28,8 @@ function setup () {
   document.querySelector(currentDayTag).style.color = '#ff3333';
 
   //assign date-day to rightside-dates
-  document.querySelector('.rightside-dates span')
-  if (weekArray.indexOf(currentDay) == 0) {
-    document.querySelectorAll('.rightside-dates span').forEach(day => {
-      this.innerHTML = dateDay + (weekArray.indexOf() - weekArray.indexOf())
-    })
-  }
-
+  const dateDayIndex = weekArray.indexOf(currentDay);
+  document.querySelectorAll('.rightside-dates span').forEach(day => this.innerHTML = dateDay + (weekArray.indexOf(this.classList) - dateDayIndex));
 };
 
 document.addEventListener('DOMContentLoaded', setup);
