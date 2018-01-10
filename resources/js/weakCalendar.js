@@ -30,7 +30,8 @@ function setup () {
   //assign date-day to rightside-dates
   document.querySelector('.rightside-dates span')
   if (weekArray.indexOf(currentDay) == 0) {
-    document.querySelectorAll('.rightside-dates span').forEach(day => this.innerHTML = dateDay + 
+    document.querySelectorAll('.rightside-dates span').forEach(day => {
+      this.innerHTML = dateDay + (weekArray.indexOf() - weekArray.indexOf())
     })
   }
 
