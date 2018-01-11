@@ -73,24 +73,25 @@ function revealModal (item) {
   document.querySelector('.addbutton').addEventListener('click', addEvent);
 
   function addEvent () {
+    //access data from form
+    const eventData = document.querySelector('form').elements.event.value;
+    const detailsData = document.querySelector('form').elements.details.value;
+    const timeStartData = document.querySelector('form').elements.timestart.value;
+    const timeEndData = document.querySelector('form').elements.timeend.value;
+
+    //write data into appropriate div
+    const timeArray = ['730am', '800am', '830am', '900am', '930am', '1000am', '1030am', '1100am', '1130am', '1200pm', '1230pm', '100pm', '130pm', '200pm', '230pm', '300pm', '330pm', '400pm', '430pm', '500pm', '530pm', '600pm'];
+    const startIndex = timeArray.indexOf(timeStartData) + 1;
+    
+
     //reset css
     modal.style.display = 'none';
     highlightedCell.remove('highlighted');
     window.setTimeout(function () {
       rightSide.classList.remove('pause');
     }, 10);
-    
-    console.log(item);
   }
 
 };
-
-function addEvent (item) {
-  //reset css
-  document.querySelector('.modal').style.display = 'none';
-  document.querySelector('.highlighted').classList.remove('highlighted');
-  document.querySelector('.rightside').classList.remove('pause');
-  console.log(item);
-}
 
 document.addEventListener('DOMContentLoaded', setup);
