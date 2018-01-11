@@ -73,6 +73,16 @@ function revealModal (item) {
 
   //add listener on modal 'add event' click
   document.querySelector('.addbutton').addEventListener('click', addEvent);
+  document.querySelector('.cancelbutton').addEventListener('click', cancelEvent);
+
+  function cancelEvent () {
+    //reset css
+    modal.style.display = 'none';
+    highlightedCell.remove('highlighted');
+    window.setTimeout(function () {
+      rightSide.classList.remove('pause');
+    }, 10);
+  }
 
   function addEvent () {
     //access data from form
