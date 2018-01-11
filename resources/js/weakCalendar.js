@@ -33,6 +33,9 @@ function setup () {
     let thisDate = (dateDay*1) + (weekArray.indexOf(day.classList.value) - dateDayIndex);
     day.innerHTML = thisDate;
   });
+
+  //generate empty rightside divs for content
+  
 }
 
 document.addEventListener('DOMContentLoaded', setup);
