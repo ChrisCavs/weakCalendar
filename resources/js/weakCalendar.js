@@ -1,3 +1,5 @@
+document.addEventListener('DOMContentLoaded', setup);
+
 function setup () {
 
   //retrieve current date info
@@ -113,5 +115,3 @@ function revealModal (item) {
   }
 
 };
-
-document.addEventListener('DOMContentLoaded', setup);
