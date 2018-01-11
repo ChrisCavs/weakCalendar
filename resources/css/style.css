@@ -33,6 +33,7 @@ header span {
 
 /*=====LEFTSIDE=====*/
 .leftside {
+  width: 10%;
   display: flex;
   flex-direction: column;
 }
@@ -70,7 +71,22 @@ header span {
   display: flex;
   justify-content: space-between;
 }
-.rightside-content-containers {
+.rightside-columns {
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.rightside-column {
+  width: calc(100%/7);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-left: 1px solid #e6eeff
+}
+.rightside-column-content {
+  display: flex;
+  height: calc(100%/22);
+  flex-direction: column;
   border-bottom: 1px solid #e6eeff;
 }
 

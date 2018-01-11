@@ -35,7 +35,14 @@ function setup () {
   });
 
   //generate empty rightside divs for content
-  
+  document.querySelectorAll('.rightside-column').forEach(item => {
+    for (var i = 0; i < 22; i++) {
+      let contentPiece = document.createElement('div');
+      contentPiece.className = 'rightside-column-content';
+      item.appendChild(contentPiece);
+    }
+  })
+
 }
 
 document.addEventListener('DOMContentLoaded', setup);
