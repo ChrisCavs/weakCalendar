@@ -58,32 +58,18 @@ header span {
 
   width: 100%;
 }
-.rightside-dates {
-  display: flex;
-  justify-content: space-between;
-
-}
-
-.rightside-content {
-  display: flex;
-  justify-content: space-between;
-}
-.rightside-columns {
-  height: 100%;
-  display: flex;
-  justify-content: space-between;
-}
 .rightside-column {
-  width: calc(100%/7);
+  width: calc(100%/8);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   border-left: 1px solid #e6eeff
 }
 .rightside-column-content {
-  display: flex;
   height: calc(100%/22);
+  display: flex;
   flex-direction: column;
+
   border-bottom: 1px solid #e6eeff;
 }
 
