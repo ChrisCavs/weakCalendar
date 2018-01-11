@@ -17,9 +17,7 @@ function setup () {
   //format timezone
   const splitDate = today.toString().split(' ');
   const timeZone = splitDate[5].substring(0,6);
-
-  //add timezone to leftside startStop
-  document.querySelector('.leftside-timezone').innerHTML = timeZone;
+  document.querySelector('.timezone').innerHTML = timeZone;
 
   //place current day in week, highlight that day
   const currentDay = splitDate[0]; // as in mon, tue, wed
@@ -27,9 +25,9 @@ function setup () {
   currentDayTag = "." + currentDay;
   document.querySelector(currentDayTag).parentElement.style.color = '#ff3333';
 
-  //assign date-day to rightside-dates
+  //assign dates to subheader
   const dateDayIndex = weekArray.indexOf(currentDay);
-  document.querySelectorAll('.rightside-dates span').forEach(day => {
+  document.querySelectorAll('.date span').forEach(day => {
     let thisDate = (dateDay*1) + (weekArray.indexOf(day.classList.value) - dateDayIndex);
     day.innerHTML = thisDate;
   });
