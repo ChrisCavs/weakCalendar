@@ -50,10 +50,22 @@ function setup () {
 function revealModal (item) {
   if (item.target.classList.length > 1) return //prevent mouse-drag
 
-  //reveal the modal
+  //add placeholder on target
 
-  //add listener on modal 'add event', then modify contents of item.target
-  item.target.innerHTML = "hello!";
+  //reveal the modal near target location
+  let yPosition = item.clientY - 20;
+  let xPosition = item.clientX + 30;
+
+  const modal = document.querySelector('.modal');
+  const modalContainer = document.querySelector('.modal-container');
+
+  modalContainer.style.top = `${yPosition}px`;
+  modalContainer.style.left = `${xPosition}px`;
+  modal.style.display = "flex";
+
+
+  //add listener on modal 'add event' click, then modify contents of item.target
+
 };
 
 document.addEventListener('DOMContentLoaded', setup);
