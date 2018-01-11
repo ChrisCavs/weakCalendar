@@ -91,6 +91,10 @@ header span {
 }
 
 /*=====FOOTER=====*/
+footer {
+  display: flex;
+  flex-direction: column;
+}
 .week-buttons {
   display: flex;
   justify-content: space-between;
@@ -102,7 +106,6 @@ header span {
   justify-content: space-between;
 
   padding: 24px;
-  margin-top: 16px;
 
   border-top: 1px solid #e6eeff;
 }

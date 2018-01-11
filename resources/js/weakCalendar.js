@@ -40,8 +40,18 @@ function setup () {
 
       item.appendChild(contentPiece);
     }
-  })
+  });
 
-}
+  //add event listener for onclick content
+  document.querySelectorAll('.rightside-column-content').forEach(item => addEventListener('click', revealModal));
+
+};
+
+function revealModal (item) {
+  if (item.target.classList.length > 1) return //prevent mouse-drag
+
+  console.log(item.target);
+  item.target.innerHTML = "hello!";
+};
 
 document.addEventListener('DOMContentLoaded', setup);
