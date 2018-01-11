@@ -37,6 +37,7 @@ function setup () {
     for (var i = 0; i < 22; i++) {
       let contentPiece = document.createElement('div');
       contentPiece.className = 'rightside-column-content';
+
       item.appendChild(contentPiece);
     }
   })

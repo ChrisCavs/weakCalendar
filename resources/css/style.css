@@ -8,6 +8,7 @@ html {
 }
 .content {
   display: flex;
+  justify-content: space-between;
 }
 /*=====HEADER=====*/
 header {
@@ -39,16 +40,28 @@ header span {
   border-bottom: 1px solid #e6eeff;
 }
 .date {
+  width: calc(100%/8);
+
   padding: 24px;
 
+  font-weight: bold;
+
   border-left: 1px solid #e6eeff;
+}
+.timezone {
+  color: grey;
+  font-weight: normal;
 }
 
 /*=====LEFTSIDE=====*/
 .leftside {
   width: calc(100%/8);
+
   display: flex;
   flex-direction: column;
+}
+.leftside-times {
+  padding: 24px;
 }
 
 /*=====RIGHTSIDE=====*/
@@ -66,7 +79,6 @@ header span {
   border-left: 1px solid #e6eeff
 }
 .rightside-column-content {
-  height: calc(100%/22);
   display: flex;
   flex-direction: column;
 
