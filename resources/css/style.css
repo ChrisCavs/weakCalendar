@@ -10,6 +10,18 @@ html {
   display: flex;
   justify-content: space-between;
 }
+
+/*=====Text Stylings=====*/
+.title {
+  color: #9abaff;
+  font-weight: bold;
+  font-size: 12px;
+}
+.body {
+  color: #1e2533;
+  font-size: 10px;
+}
+
 /*=====HEADER=====*/
 header {
   display: flex;
@@ -88,6 +100,9 @@ header span {
   padding-top: 12px;
 
   border-bottom: 1px solid #e6eeff;
+}
+.highlighted {
+  background-color: #80ffcc;
 }
 
 /*=====FOOTER=====*/

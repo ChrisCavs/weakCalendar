@@ -44,7 +44,6 @@ function setup () {
 
   //add event listener for onclick content
   document.querySelectorAll('.rightside-column-content').forEach(item => addEventListener('click', revealModal));
-
 };
 
 function revealModal (item) {
@@ -56,6 +55,8 @@ function revealModal (item) {
   rightSide.classList.add('pause');
 
   //add placeholder on target
+  const highlightedCell = item.target.classList;
+  highlightedCell.add('highlighted');
 
   //reveal the modal near target location
   let yPosition = item.clientY - 20;
@@ -69,9 +70,27 @@ function revealModal (item) {
   modal.style.display = "flex";
 
   //add listener on modal 'add event' click
+  document.querySelector('.addbutton').addEventListener('click', addEvent);
 
-  //remove 'pause'
+  function addEvent () {
+    //reset css
+    modal.style.display = 'none';
+    highlightedCell.remove('highlighted');
+    window.setTimeout(function () {
+      rightSide.classList.remove('pause');
+    }, 10);
+    
+    console.log(item);
+  }
 
 };
+
+function addEvent (item) {
+  //reset css
+  document.querySelector('.modal').style.display = 'none';
+  document.querySelector('.highlighted').classList.remove('highlighted');
+  document.querySelector('.rightside').classList.remove('pause');
+  console.log(item);
+}
 
 document.addEventListener('DOMContentLoaded', setup);
