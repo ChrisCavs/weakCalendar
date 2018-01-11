@@ -50,7 +50,9 @@ function setup () {
 function revealModal (item) {
   if (item.target.classList.length > 1) return //prevent mouse-drag
 
-  console.log(item.target);
+  //reveal the modal
+
+  //add listener on modal 'add event', then modify contents of item.target
   item.target.innerHTML = "hello!";
 };
 

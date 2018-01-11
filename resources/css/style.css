@@ -109,3 +109,14 @@ footer {
 
   border-top: 1px solid #e6eeff;
 }
+
+/*=====MODAL=====*/
+.modal-container {
+  display: none;
+  position: fixed;
+
+  left: 0;
+  top: 0;
+
+  z-index: 10;
+}
