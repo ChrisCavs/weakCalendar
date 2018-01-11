@@ -50,6 +50,7 @@ function setup () {
 function revealModal (item) {
   const rightSide = document.querySelector('.rightside');
   const itemParent = item.target.parentElement;
+  console.log(itemParent);
 
   if (Array.from(rightSide.classList).includes('pause')) return //prevent click event while in modal
   if (item.target.classList.length > 1) return //prevent mouse-drag
@@ -86,17 +87,18 @@ function revealModal (item) {
 
   function addEvent () {
     //access data from form
-    const eventData = document.querySelector('form').elements.event.value;
-    const detailsData = document.querySelector('form').elements.details.value;
-    const timeStartData = document.querySelector('form').elements.timestart.value;
-    const timeEndData = document.querySelector('form').elements.timeend.value;
-    const dataArray = [eventData, detailsData];
+    let eventData = document.querySelector('form').elements.event.value;
+    let detailsData = document.querySelector('form').elements.details.value;
+    let timeStartData = document.querySelector('form').elements.timestart.value;
+    let timeEndData = document.querySelector('form').elements.timeend.value;
+    let dataArray = [eventData, detailsData];
 
     //set indexes based on time range
-    const timeArray = ['730am', '800am', '830am', '900am', '930am', '1000am', '1030am', '1100am', '1130am', '1200pm', '1230pm', '100pm', '130pm', '200pm', '230pm', '300pm', '330pm', '400pm', '430pm', '500pm', '530pm', '600pm'];
-    const startIndex = timeArray.indexOf(timeStartData);
-    const endIndex = timeArray.indexOf(timeEndData);
-    const selection = itemParent.getElementsByTagName('div');
+    let timeArray = ['730am', '800am', '830am', '900am', '930am', '1000am', '1030am', '1100am', '1130am', '1200pm', '1230pm', '100pm', '130pm', '200pm', '230pm', '300pm', '330pm', '400pm', '430pm', '500pm', '530pm', '600pm'];
+    let startIndex = timeArray.indexOf(timeStartData);
+    let endIndex = timeArray.indexOf(timeEndData);
+    let selection = itemParent.getElementsByTagName('div');
+    console.log(selection);
 
     //write data into appropriate div
     dataArray.forEach(item => {
