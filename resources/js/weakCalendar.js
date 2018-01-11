@@ -48,7 +48,12 @@ function setup () {
 };
 
 function revealModal (item) {
+  const rightSide = document.querySelector('.rightside');
+
+  if (Array.from(rightSide.classList).includes('pause')) return //prevent click event while in modal
   if (item.target.classList.length > 1) return //prevent mouse-drag
+
+  rightSide.classList.add('pause');
 
   //add placeholder on target
 
@@ -63,8 +68,9 @@ function revealModal (item) {
   modalContainer.style.left = `${xPosition}px`;
   modal.style.display = "flex";
 
+  //add listener on modal 'add event' click
 
-  //add listener on modal 'add event' click, then modify contents of item.target
+  //remove 'pause'
 
 };
 
