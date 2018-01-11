@@ -111,7 +111,7 @@ function revealModal (item) {
     selection[startIndex].lastChild.classList.add('body');
     selection[startIndex].style.wordWrap = 'break-word';
 
-    //format multiple divs based on time range
+    //format divs based on time range
     for (var i = startIndex; i < (endIndex - startIndex); i++) {
       selection[i].style.backgroundColor = '#e6eeff';
     }
