@@ -13,9 +13,9 @@ html {
 
 /*=====Text Stylings=====*/
 .title {
-  color: #9abaff;
+  color: #4B82FF;
   font-weight: bold;
-  font-size: 12px;
+  font-size: 14px;
 }
 .body {
   color: #1e2533;
@@ -97,7 +97,7 @@ header span {
   flex-direction: column;
 
   height: 25px;
-  padding-top: 12px;
+  padding: 8px;
 
   border-bottom: 1px solid #e6eeff;
 }

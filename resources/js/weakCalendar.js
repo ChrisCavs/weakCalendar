@@ -37,7 +37,6 @@ function setup () {
     for (var i = 0; i < 22; i++) {
       let contentPiece = document.createElement('div');
       contentPiece.className = 'rightside-column-content';
-
       item.appendChild(contentPiece);
     }
   });
@@ -79,6 +78,7 @@ function revealModal (item) {
     const detailsData = document.querySelector('form').elements.details.value;
     const timeStartData = document.querySelector('form').elements.timestart.value;
     const timeEndData = document.querySelector('form').elements.timeend.value;
+    const dataArray = [eventData, detailsData];
 
     //set indexes based on time range
     const timeArray = ['730am', '800am', '830am', '900am', '930am', '1000am', '1030am', '1100am', '1130am', '1200pm', '1230pm', '100pm', '130pm', '200pm', '230pm', '300pm', '330pm', '400pm', '430pm', '500pm', '530pm', '600pm'];
@@ -87,11 +87,22 @@ function revealModal (item) {
     const selection = itemParent.getElementsByTagName('div');
 
     //write data into appropriate div
-    let eventP = document.createElement('p');
-    let eventNode = document.createTextNode(eventData);
-    eventP.appendChild(eventNode);
-    eventP.classList.add('title');
-    selection[startIndex].appendChild(eventP);
+    dataArray.forEach(item => {
+      let eventP = document.createElement('p');
+      let eventNode = document.createTextNode(item);
+      eventP.appendChild(eventNode);
+      selection[startIndex].appendChild(eventP);
+    });
+
+    //format data
+    selection[startIndex].firstChild.classList.add('title');
+    selection[startIndex].lastChild.classList.add('body');
+    selection[startIndex].style.wordWrap = 'break-word';
+
+    //format multiple divs based on time range
+    for (var i = startIndex; i < (endIndex - startIndex); i++) {
+      selection[i].style.backgroundColor = '#e6eeff';
+    }
 
     //reset css
     modal.style.display = 'none';
