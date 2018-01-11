@@ -87,8 +87,11 @@ function revealModal (item) {
     const selection = itemParent.getElementsByTagName('div');
 
     //write data into appropriate div
-
-    selection[startIndex].appendChild(contentPiece)
+    let eventP = document.createElement('p');
+    let eventNode = document.createTextNode(eventData);
+    eventP.appendChild(eventNode);
+    eventP.classList.add('title');
+    selection[startIndex].appendChild(eventP);
 
     //reset css
     modal.style.display = 'none';
