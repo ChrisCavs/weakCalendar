@@ -85,48 +85,48 @@ function revealModal (item) {
 };
 
 function addEvent () {
-    //access data from form
-    const form = document.querySelector('form');
-    const eventData = form.elements.event.value;
-    const detailsData = form.elements.details.value;
-    const timeStartData = form.elements.timestart.value;
-    const timeEndData = form.elements.timeend.value;
-    const dataArray = [eventData, detailsData];
+  //access data from form
+  const form = document.querySelector('form');
+  const eventData = form.elements.event.value;
+  const detailsData = form.elements.details.value;
+  const timeStartData = form.elements.timestart.value;
+  const timeEndData = form.elements.timeend.value;
+  const dataArray = [eventData, detailsData];
   
-    //if timestart=timeend, alert the user
-    if (timeStartData == timeEndData) {
-      alert('Start time and End time cannot be the same');
-      return;
-    }
-
-    //set indexes based on time range
-    const timeArray = ['730am', '800am', '830am', '900am', '930am', '1000am', '1030am', '1100am', '1130am', '1200pm', '1230pm', '100pm', '130pm', '200pm', '230pm', '300pm', '330pm', '400pm', '430pm', '500pm', '530pm', '600pm'];
-    let startIndex = timeArray.indexOf(timeStartData);
-    let endIndex = timeArray.indexOf(timeEndData);
-    const selection = document.querySelector('.highlighted').parentElement.getElementsByTagName('div');
-
-    //write data into appropriate div
-    dataArray.forEach(item => {
-      const eventP = document.createElement('p');
-      const eventNode = document.createTextNode(item);
-      eventP.appendChild(eventNode);
-      selection[startIndex].appendChild(eventP);
-    });
-
-    //format data
-    selection[startIndex].firstChild.classList.add('title');
-    selection[startIndex].lastChild.classList.add('body');
-    selection[startIndex].style.wordWrap = 'break-word';
-
-    //format divs based on time range
-    for (var i = startIndex*1; i < endIndex; i++) {
-      selection[i].style.backgroundColor = '#e6eeff';
-    }
-
-    //reset css
-    document.querySelector('.modal').style.display = 'none';
-    document.querySelector('.highlighted').classList.remove('highlighted');
-    window.setTimeout(function () {
-      document.querySelector('.rightside').classList.remove('pause');
-    }, 10);
+  //if timestart=timeend, alert the user
+  if (timeStartData == timeEndData) {
+    alert('Start time and End time cannot be the same');
+    return;
   }
+
+  //set indexes based on time range
+  const timeArray = ['730am', '800am', '830am', '900am', '930am', '1000am', '1030am', '1100am', '1130am', '1200pm', '1230pm', '100pm', '130pm', '200pm', '230pm', '300pm', '330pm', '400pm', '430pm', '500pm', '530pm', '600pm'];
+  let startIndex = timeArray.indexOf(timeStartData);
+  let endIndex = timeArray.indexOf(timeEndData);
+  const selection = document.querySelector('.highlighted').parentElement.getElementsByTagName('div');
+
+  //write data into appropriate div
+  dataArray.forEach(item => {
+    const eventP = document.createElement('p');
+    const eventNode = document.createTextNode(item);
+    eventP.appendChild(eventNode);
+    selection[startIndex].appendChild(eventP);
+  });
+
+  //format data
+  selection[startIndex].firstChild.classList.add('title');
+  selection[startIndex].lastChild.classList.add('body');
+  selection[startIndex].style.wordWrap = 'break-word';
+
+  //format divs based on time range
+  for (var i = startIndex*1; i < endIndex; i++) {
+    selection[i].style.backgroundColor = '#e6eeff';
+  }
+
+  //reset css
+  document.querySelector('.modal').style.display = 'none';
+  document.querySelector('.highlighted').classList.remove('highlighted');
+  window.setTimeout(function () {
+    document.querySelector('.rightside').classList.remove('pause');
+  }, 10);
+}
