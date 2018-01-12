@@ -98,6 +98,12 @@ function addEvent () {
     alert('Start time and End time cannot be the same');
     return;
   }
+  
+  //if event name is empty, alert user
+  if (eventData == '') {
+    alert('Event name is a required field');
+    return;
+  }
 
   //set indexes based on time range
   const timeArray = ['730am', '800am', '830am', '900am', '930am', '1000am', '1030am', '1100am', '1130am', '1200pm', '1230pm', '100pm', '130pm', '200pm', '230pm', '300pm', '330pm', '400pm', '430pm', '500pm', '530pm', '600pm'];
