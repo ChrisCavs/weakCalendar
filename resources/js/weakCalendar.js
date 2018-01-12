@@ -49,12 +49,10 @@ function setup () {
 
 function revealModal (item) {
   const rightSide = document.querySelector('.rightside');
-  const itemParent = item.target.parentElement;
-  console.log(itemParent);
-
   if (Array.from(rightSide.classList).includes('pause')) return //prevent click event while in modal
-  if (item.target.classList.length > 1) return //prevent mouse-drag
 
+  if (item.target.classList.length > 1) return //prevent mouse-drag
+  
   rightSide.classList.add('pause');
 
   //add placeholder on target
@@ -78,32 +76,33 @@ function revealModal (item) {
 
   function cancelEvent () {
     //reset css
-    modal.style.display = 'none';
+    document.querySelector('.modal').style.display = 'none';
     highlightedCell.remove('highlighted');
     window.setTimeout(function () {
-      rightSide.classList.remove('pause');
+      document.querySelector('.rightside').classList.remove('pause');
     }, 10);
   }
+};
 
-  function addEvent () {
+function addEvent () {
     //access data from form
-    let eventData = document.querySelector('form').elements.event.value;
-    let detailsData = document.querySelector('form').elements.details.value;
-    let timeStartData = document.querySelector('form').elements.timestart.value;
-    let timeEndData = document.querySelector('form').elements.timeend.value;
-    let dataArray = [eventData, detailsData];
+    const form = document.querySelector('form');
+    const eventData = form.elements.event.value;
+    const detailsData = form.elements.details.value;
+    const timeStartData = form.elements.timestart.value;
+    const timeEndData = form.elements.timeend.value;
+    const dataArray = [eventData, detailsData];
 
     //set indexes based on time range
-    let timeArray = ['730am', '800am', '830am', '900am', '930am', '1000am', '1030am', '1100am', '1130am', '1200pm', '1230pm', '100pm', '130pm', '200pm', '230pm', '300pm', '330pm', '400pm', '430pm', '500pm', '530pm', '600pm'];
+    const timeArray = ['730am', '800am', '830am', '900am', '930am', '1000am', '1030am', '1100am', '1130am', '1200pm', '1230pm', '100pm', '130pm', '200pm', '230pm', '300pm', '330pm', '400pm', '430pm', '500pm', '530pm', '600pm'];
     let startIndex = timeArray.indexOf(timeStartData);
     let endIndex = timeArray.indexOf(timeEndData);
-    let selection = itemParent.getElementsByTagName('div');
-    console.log(selection);
+    const selection = document.querySelector('.highlighted').parentElement.getElementsByTagName('div');
 
     //write data into appropriate div
     dataArray.forEach(item => {
-      let eventP = document.createElement('p');
-      let eventNode = document.createTextNode(item);
+      const eventP = document.createElement('p');
+      const eventNode = document.createTextNode(item);
       eventP.appendChild(eventNode);
       selection[startIndex].appendChild(eventP);
     });
@@ -114,16 +113,14 @@ function revealModal (item) {
     selection[startIndex].style.wordWrap = 'break-word';
 
     //format divs based on time range
-    for (var i = startIndex; i < (endIndex - startIndex); i++) {
+    for (var i = startIndex*1; i < endIndex; i++) {
       selection[i].style.backgroundColor = '#e6eeff';
     }
 
     //reset css
-    modal.style.display = 'none';
-    highlightedCell.remove('highlighted');
+    document.querySelector('.modal').style.display = 'none';
+    document.querySelector('.highlighted').classList.remove('highlighted');
     window.setTimeout(function () {
-      rightSide.classList.remove('pause');
+      document.querySelector('.rightside').classList.remove('pause');
     }, 10);
   }
-
-};
