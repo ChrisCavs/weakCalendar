@@ -47,12 +47,13 @@ function setup () {
   document.querySelectorAll('.rightside-column-content').forEach(item => addEventListener('click', revealModal));
 };
 
-function revealModal (item) {
+function revealModal (event) {
+  item.stopPropagation();
   const rightSide = document.querySelector('.rightside');
   if (Array.from(rightSide.classList).includes('pause')) return //prevent click event while in modal
 
   if (item.target.classList.length > 1) return //prevent mouse-drag
-  
+
   rightSide.classList.add('pause');
 
   //add placeholder on target
@@ -92,13 +93,13 @@ function addEvent () {
   const timeStartData = form.elements.timestart.value;
   const timeEndData = form.elements.timeend.value;
   const dataArray = [eventData, detailsData];
-  
+
   //if timestart=timeend, alert the user
   if (timeStartData == timeEndData) {
     alert('Start time and End time cannot be the same');
     return;
   }
-  
+
   //if event name is empty, alert user
   if (eventData == '') {
     alert('Event name is a required field');
