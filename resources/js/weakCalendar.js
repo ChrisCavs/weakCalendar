@@ -50,7 +50,7 @@ function setup () {
   });
 
   //check local storage, fill in data based on saved events
-
+  checkForData();
 
   //add event listener for onclick content
   document.querySelectorAll('.rightside-column-content').forEach(item => item.addEventListener('click', revealModal));
@@ -171,4 +171,16 @@ function addEventToDom (dataArray) {
   window.setTimeout(function () {
     document.querySelector('.rightside').classList.remove('pause');
   }, 10);
+}
+
+function checkForData () {
+  DATA = JSON.parse(localStorage.getItem('DATA'));
+  console.log(DATA);
+  console.log(Object.keys(DATA));
+  console.log(Object.values(DATA));
+
+  Object.values(DATA).forEach(array => {
+    array.forEach(item => {
+    })
+  })
 }
