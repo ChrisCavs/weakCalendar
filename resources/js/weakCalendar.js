@@ -92,12 +92,12 @@ function revealModal (item) {
 
 function addEventToData () {
   //access data from form
-  const form = document.querySelector('form');
-  const eventData = form.elements.event.value;
-  const detailsData = form.elements.details.value;
-  const timeStartData = form.elements.timestart.value;
-  const timeEndData = form.elements.timeend.value;
-  const dataArray = [eventData, detailsData, timeStartData, timeEndData];
+  let form = document.querySelector('form');
+  let eventData = form.elements.event.value;
+  let detailsData = form.elements.details.value;
+  let timeStartData = form.elements.timestart.value;
+  let timeEndData = form.elements.timeend.value;
+  let dataArray = [eventData, detailsData, timeStartData, timeEndData];
 
   //if timestart=timeend, alert the user
   if (timeStartData == timeEndData) {
@@ -114,10 +114,10 @@ function addEventToData () {
   //identify dateCode for local storage
   const highlighted = document.querySelector('.highlighted');
   const dataDD = dateDay*1 + (weekArray.indexOf(highlighted.parentElement.className.slice(17,20))-dateDayIndex);
-  const dateCode = `${dataDD}/${dateMonth}`;
+  let dateCode = `${dataDD}/${dateMonth}`;
 
   //if the dateCode already exists, just add the new data.  otherwise create dateCode
-  if (!DATA.dateCode) {
+  if (!DATA[dateCode]) {
     DATA[dateCode] = {};
     DATA[dateCode][timeStartData] = dataArray;
   } else {
