@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', setup);
 
 //set up object to receive data
-let DATA = {}
+let DATA = {};
 
 //retrieve current date info
 const today = new Date();
@@ -21,6 +21,7 @@ const dateDay = splitDate[2]; // as in 01, 21, 30
 
 const dateMonth = monthArray[mm];
 const dateDayIndex = weekArray.indexOf(currentDay);
+
 
 function setup () {
   //add current month to top of page
@@ -177,17 +178,47 @@ function addEventToDom (dataArray) {
 function checkForData () {
   DATA = JSON.parse(localStorage.getItem('DATA'));
 
-  console.log(Object.keys(DATA));
-  console.log(Object.values(DATA));
-  console.log(Object.entries(DATA));
+  //if local storage is empty, return
+  if(!DATA) {
+    DATA = {};
+    return;
+  }
 
   Object.entries(DATA).forEach(array => {
 
     document.querySelectorAll('.date').forEach(div => {
 
-      if (div.classList.contains(array[0].split('/')[0])) { //looking for matches between our DATA keys and our subheader classes
-        console.log(div.innerHTML.slice(0,3));
+      //looking for matches between our DATA keys and our subheader classes
+      if (div.classList.contains(array[0].split('/')[0])) {
+
+        //when there's a match, find the appropriate column to write the data
+        const rightSideColumn = document.querySelector(`.rightside .${div.innerHTML.slice(0,3)}`);
+        const selection = rightSideColumn.getElementsByTagName('div');
+
+        array[1].forEach(timeStamp => {
+          const domData = timeStamp[1].splice(0,2);
+          const startIndex = timeArray.indexOf(timeStamp[1][0]);
+          const endIndex = timeArray.indexOf(timeStamp[1][1]);
+
+          //write data into appropriate div
+          domData.forEach(item => {
+            const eventP = document.createElement('p');
+            const eventNode = document.createTextNode(item);
+            eventP.appendChild(eventNode);
+            selection[startIndex].appendChild(eventP);
+          });
+
+          //format data
+          selection[startIndex].firstChild.classList.add('title');
+          selection[startIndex].lastChild.classList.add('body');
+          selection[startIndex].style.wordWrap = 'break-word';
+
+          //format divs based on time range
+          for (var i = startIndex*1; i < endIndex; i++) {
+            selection[i].style.backgroundColor = '#e6eeff';
+          }
+        });
       }
     });
-  })
+  });
 }
