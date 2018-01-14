@@ -34,10 +34,11 @@ function setup () {
   currentDayTag = "." + currentDay;
   document.querySelector(currentDayTag).parentElement.style.color = '#ff3333';
 
-  //assign dates to subheader
+  //assign dates to subheader + subheader class
   document.querySelectorAll('.date span').forEach(day => {
     let thisDate = (dateDay*1) + (weekArray.indexOf(day.classList.value) - dateDayIndex);
     day.innerHTML = thisDate;
+    day.parentElement.classList.add(thisDate);
   });
 
   //generate empty rightside divs for content
@@ -175,12 +176,11 @@ function addEventToDom (dataArray) {
 
 function checkForData () {
   DATA = JSON.parse(localStorage.getItem('DATA'));
-  console.log(DATA);
-  console.log(Object.keys(DATA));
-  console.log(Object.values(DATA));
+  //console.log(DATA);
+  //console.log(Object.keys(DATA));
+  //console.log(Object.values(DATA));
 
-  Object.values(DATA).forEach(array => {
-    array.forEach(item => {
-    })
-  })
+  // Object.keys(DATA).forEach(key => {
+  //   key.split('/')[0])
+  //   })
 }
