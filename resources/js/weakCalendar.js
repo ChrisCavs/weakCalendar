@@ -118,15 +118,19 @@ function addEventToData () {
 
   //if the dateCode already exists, just add the new data.  otherwise create dateCode
   if (!DATA[dateCode]) {
-    DATA[dateCode] = {};
-    DATA[dateCode][timeStartData] = dataArray;
+    DATA[dateCode] = [];
+    DATA[dateCode].push(
+      [timeStartData, dataArray]
+    )
   } else {
-    DATA[dateCode][timeStartData] = dataArray;
+    DATA[dateCode].push(
+      [timeStartData, dataArray]
+    )
   };
 
-  console.log(DATA);
+  JStrings = JSON.stringify(DATA);
+  console.log(JSON.parse(JStrings));
 
-  //localStorage.setItem(dateCode, dataArray);
 }
 
 function addEventToDom () {
