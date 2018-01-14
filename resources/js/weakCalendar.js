@@ -12,6 +12,7 @@ const yyyy = today.getFullYear();
 const monthArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 const monthArrayDay = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 const weekArray = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+const timeArray = ['730am', '800am', '830am', '900am', '930am', '1000am', '1030am', '1100am', '1130am', '1200pm', '1230pm', '100pm', '130pm', '200pm', '230pm', '300pm', '330pm', '400pm', '430pm', '500pm', '530pm', '600pm'];
 
 //place the current day in the week
 const splitDate = today.toString().split(' ');
@@ -128,14 +129,16 @@ function addEventToData () {
     )
   };
 
-  JStrings = JSON.stringify(DATA);
-  console.log(JSON.parse(JStrings));
+  //add the data to local storage
+  let JStrings = JSON.stringify(DATA);
+  localStorage.setItem(JStrings);
 
+  //pass data to 'addeventtodom' function
+  addEventoDom(dataArray);
 }
 
-function addEventToDom () {
+function addEventToDom (dataArray) {
   //set indexes based on time range
-  const timeArray = ['730am', '800am', '830am', '900am', '930am', '1000am', '1030am', '1100am', '1130am', '1200pm', '1230pm', '100pm', '130pm', '200pm', '230pm', '300pm', '330pm', '400pm', '430pm', '500pm', '530pm', '600pm'];
   let startIndex = timeArray.indexOf(timeStartData);
   let endIndex = timeArray.indexOf(timeEndData);
   const selection = document.querySelector('.highlighted').parentElement.getElementsByTagName('div');
