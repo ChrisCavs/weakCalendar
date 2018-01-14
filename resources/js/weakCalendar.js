@@ -1,34 +1,39 @@
 document.addEventListener('DOMContentLoaded', setup);
 
+//set up object to receive data
+let DATA = {}
+
+//retrieve current date info
+const today = new Date();
+const dd = today.getDate();
+const mm = today.getMonth();
+const yyyy = today.getFullYear();
+
+const monthArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const monthArrayDay = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+const weekArray = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+//place the current day in the week
+const splitDate = today.toString().split(' ');
+const currentDay = splitDate[0]; // as in mon, tue, wed
+const dateDay = splitDate[2]; // as in 01, 21, 30
+
+const dateMonth = monthArray[mm];
+const dateDayIndex = weekArray.indexOf(currentDay);
+
 function setup () {
-
-  //retrieve current date info
-  const today = new Date();
-  const dd = today.getDate();
-  const mm = today.getMonth();
-  const yyyy = today.getFullYear();
-
-  const monthArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  const monthArrayDay = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-  const weekArray = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-
   //add current month to top of page
-  const dateMonth = monthArray[mm];
   document.querySelector('.header-monthof').innerHTML = dateMonth;
 
   //format timezone
-  const splitDate = today.toString().split(' ');
   const timeZone = splitDate[5].substring(0,6);
   document.querySelector('.timezone').innerHTML = timeZone;
 
   //place current day in week, highlight that day
-  const currentDay = splitDate[0]; // as in mon, tue, wed
-  const dateDay = splitDate[2] // as in 01, 21, 30
   currentDayTag = "." + currentDay;
   document.querySelector(currentDayTag).parentElement.style.color = '#ff3333';
 
   //assign dates to subheader
-  const dateDayIndex = weekArray.indexOf(currentDay);
   document.querySelectorAll('.date span').forEach(day => {
     let thisDate = (dateDay*1) + (weekArray.indexOf(day.classList.value) - dateDayIndex);
     day.innerHTML = thisDate;
@@ -44,10 +49,10 @@ function setup () {
   });
 
   //add event listener for onclick content
-  document.querySelectorAll('.rightside-column-content').forEach(item => addEventListener('click', revealModal));
+  document.querySelectorAll('.rightside-column-content').forEach(item => item.addEventListener('click', revealModal));
 };
 
-function revealModal (event) {
+function revealModal (item) {
   item.stopPropagation();
   const rightSide = document.querySelector('.rightside');
   if (Array.from(rightSide.classList).includes('pause')) return //prevent click event while in modal
@@ -72,7 +77,7 @@ function revealModal (event) {
   modal.style.display = "flex";
 
   //add listener on modal 'add event' click
-  document.querySelector('.addbutton').addEventListener('click', addEvent);
+  document.querySelector('.addbutton').addEventListener('click', addEventToData);
   document.querySelector('.cancelbutton').addEventListener('click', cancelEvent);
 
   function cancelEvent () {
@@ -85,14 +90,14 @@ function revealModal (event) {
   }
 };
 
-function addEvent () {
+function addEventToData () {
   //access data from form
   const form = document.querySelector('form');
   const eventData = form.elements.event.value;
   const detailsData = form.elements.details.value;
   const timeStartData = form.elements.timestart.value;
   const timeEndData = form.elements.timeend.value;
-  const dataArray = [eventData, detailsData];
+  const dataArray = [eventData, detailsData, timeStartData, timeEndData];
 
   //if timestart=timeend, alert the user
   if (timeStartData == timeEndData) {
@@ -106,6 +111,25 @@ function addEvent () {
     return;
   }
 
+  //identify dateCode for local storage
+  const highlighted = document.querySelector('.highlighted');
+  const dataDD = dateDay*1 + (weekArray.indexOf(highlighted.parentElement.className.slice(17,20))-dateDayIndex);
+  const dateCode = `${dataDD}/${dateMonth}`;
+
+  //if the dateCode already exists, just add the new data.  otherwise create dateCode
+  if (!DATA.dateCode) {
+    DATA[dateCode] = {};
+    DATA[dateCode][timeStartData] = dataArray;
+  } else {
+    DATA[dateCode][timeStartData] = dataArray;
+  };
+
+  console.log(DATA);
+
+  //localStorage.setItem(dateCode, dataArray);
+}
+
+function addEventToDom () {
   //set indexes based on time range
   const timeArray = ['730am', '800am', '830am', '900am', '930am', '1000am', '1030am', '1100am', '1130am', '1200pm', '1230pm', '100pm', '130pm', '200pm', '230pm', '300pm', '330pm', '400pm', '430pm', '500pm', '530pm', '600pm'];
   let startIndex = timeArray.indexOf(timeStartData);
