@@ -49,6 +49,9 @@ function setup () {
     }
   });
 
+  //check local storage, fill in data based on saved events
+
+
   //add event listener for onclick content
   document.querySelectorAll('.rightside-column-content').forEach(item => item.addEventListener('click', revealModal));
 };
@@ -131,20 +134,21 @@ function addEventToData () {
 
   //add the data to local storage
   let JStrings = JSON.stringify(DATA);
-  localStorage.setItem(JStrings);
+  localStorage.setItem('DATA', JStrings);
 
   //pass data to 'addeventtodom' function
-  addEventoDom(dataArray);
+  addEventToDom(dataArray);
 }
 
 function addEventToDom (dataArray) {
   //set indexes based on time range
-  let startIndex = timeArray.indexOf(timeStartData);
-  let endIndex = timeArray.indexOf(timeEndData);
+  let startIndex = timeArray.indexOf(dataArray[2]);
+  let endIndex = timeArray.indexOf(dataArray[3]);
+  let domData = dataArray.slice(0,2)
   const selection = document.querySelector('.highlighted').parentElement.getElementsByTagName('div');
 
   //write data into appropriate div
-  dataArray.forEach(item => {
+  domData.forEach(item => {
     const eventP = document.createElement('p');
     const eventNode = document.createTextNode(item);
     eventP.appendChild(eventNode);
