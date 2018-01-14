@@ -176,11 +176,18 @@ function addEventToDom (dataArray) {
 
 function checkForData () {
   DATA = JSON.parse(localStorage.getItem('DATA'));
-  //console.log(DATA);
-  //console.log(Object.keys(DATA));
-  //console.log(Object.values(DATA));
 
-  // Object.keys(DATA).forEach(key => {
-  //   key.split('/')[0])
-  //   })
+  console.log(Object.keys(DATA));
+  console.log(Object.values(DATA));
+  console.log(Object.entries(DATA));
+
+  Object.entries(DATA).forEach(array => {
+
+    document.querySelectorAll('.date').forEach(div => {
+
+      if (div.classList.contains(array[0].split('/')[0])) { //looking for matches between our DATA keys and our subheader classes
+        console.log(div.innerHTML.slice(0,3));
+      }
+    });
+  })
 }
