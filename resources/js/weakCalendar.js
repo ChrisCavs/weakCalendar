@@ -194,7 +194,7 @@ function checkForData () {
   if(!somethingNew) return;
   let myDATA = Object.keys(somethingNew);
 
-  dataStorage = currentStorage;
+  dataStorage = somethingNew;
 
   console.log(somethingNew);
   console.log(myDATA);
