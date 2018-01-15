@@ -128,15 +128,18 @@ function addEventToData () {
   let dateCode = `${dataDD}/${dateMonth}`;
 
   //if the dateCode already exists, just add the new data.  otherwise create dateCode
-  if (!dataStorage) {
+  console.log(dataStorage);
+  if (dataStorage[dateCode] === undefined) {
     dataStorage[dateCode] = [];
-    dataStorage[dateCode].push(dataArray)
-  } else if (!dataStorage[dateCode]) {
-    dataStorage[dateCode] = [];
-    dataStorage[dateCode].push(dataArray)
+    console.log(dataStorage[dateCode]);
+    dataStorage[dateCode] = [dataArray]
+    console.log(dataStorage[dateCode]);
   } else {
     dataStorage[dateCode].push(dataArray)
+    console.log(dataStorage[dateCode]);
   }
+
+  console.log(dataStorage);
 
   //add the data to local storage
   let JStrings = JSON.stringify(dataStorage);
@@ -184,16 +187,15 @@ function addEventToDom (dataArray) {
 function checkForData () {
   let currentStorage = localStorage.getItem('DATA');
   let somethingNew = JSON.parse(currentStorage);
+
+  if(!somethingNew) return;
   let myDATA = Object.keys(somethingNew);
+
+  dataStorage = currentStorage;
 
   console.log(somethingNew);
   console.log(myDATA);
   console.log(JSON.parse(localStorage.getItem('DATA')));
-
-  //if local storage is empty, return
-  if(!dataStorage) {
-    return;
-  }
 
   myDATA.forEach(key => { //has to be an issue with this
     console.log(key);
