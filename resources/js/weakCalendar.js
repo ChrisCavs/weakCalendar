@@ -52,7 +52,7 @@ function setup () {
 
   //check local storage, fill in data based on saved events
   checkForData();
-  
+
   //add event listener for onclick content
   document.querySelectorAll('.rightside-column-content').forEach(item => item.addEventListener('click', revealModal));
 };
@@ -139,7 +139,7 @@ function addEventToData () {
   }
 
   //add the data to local storage
-  let JStrings = JSON.stringify(DATA);
+  let JStrings = JSON.stringify(dataStorage);
   localStorage.setItem('DATA', JStrings);
   console.log(JStrings);
   console.log(JSON.parse(localStorage.getItem('DATA')));
@@ -183,16 +183,19 @@ function addEventToDom (dataArray) {
 
 function checkForData () {
   let currentStorage = localStorage.getItem('DATA');
-  console.log(currentStorage);
-  let dataStorage = JSON.parse(currentStorage);
-  console.log(dataStorage);
+  let somethingNew = JSON.parse(currentStorage);
+  let myDATA = Object.entries(somethingNew);
+
+  console.log(somethingNew);
+  console.log(myDATA);
+  console.log(JSON.parse(localStorage.getItem('DATA')));
 
   //if local storage is empty, return
   if(!dataStorage) {
     return;
   }
 
-  Object.entries(dataStorage).forEach(array => {
+  myDATA.forEach(array => { //has to be an issue with this
     console.log(array);
 
     document.querySelectorAll('.date').forEach(div => {
