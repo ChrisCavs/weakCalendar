@@ -128,6 +128,7 @@ function addEventToData () {
   const dataDD = dateDay*1 + (weekArray.indexOf(highlighted.parentElement.className.slice(17,20))-dateDayIndex);
   let dateCode = `${dataDD}/${dateMonth}`;
   console.log(dateCode);
+  console.log(dateCode.toString());
 
   //if the dateCode already exists, just add the new data.  otherwise create dateCode
   console.log(dataStorage);
