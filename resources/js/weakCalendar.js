@@ -184,7 +184,7 @@ function addEventToDom (dataArray) {
 function checkForData () {
   let currentStorage = localStorage.getItem('DATA');
   let somethingNew = JSON.parse(currentStorage);
-  let myDATA = Object.entries(somethingNew);
+  let myDATA = Object.keys(somethingNew);
 
   console.log(somethingNew);
   console.log(myDATA);
@@ -195,44 +195,38 @@ function checkForData () {
     return;
   }
 
-  myDATA.forEach(array => { //has to be an issue with this
-    console.log(array);
+  myDATA.forEach(key => { //has to be an issue with this
+    console.log(key);
 
     document.querySelectorAll('.date').forEach(div => {
 
       //looking for matches between our DATA keys and our subheader classes
-      if (div.classList.contains(array[0].split('/')[0])) {
+      if (div.classList.contains(key.split('/')[0])) {
 
         //when there's a match, find the appropriate column to write the data
         const rightSideColumn = document.querySelector(`.rightside .${div.innerHTML.slice(0,3)}`);
         const selection = rightSideColumn.getElementsByTagName('div');
+        console.log(somethingNew[key]);
 
-        array[1].forEach(timeStamp => {
+        somethingNew[key].forEach(timeStamp => {
           console.log(timeStamp)
-          const domData = timeStamp.splice(0,2);
-          const startIndex = timeArray.indexOf(timeStamp[2]);
-          console.log(timeStamp[2]);
-          console.log(startIndex);
-          const endIndex = timeArray.indexOf(timeStamp[3]);
+          let domData = timeStamp.slice(0,2);
+          let startIndex = timeArray.indexOf(timeStamp[2]);
+          let endIndex = timeArray.indexOf(timeStamp[3]);
 
-          //write data into appropriate div
           domData.forEach(item => {
-            console.log(item);
             const eventP = document.createElement('p');
             const eventNode = document.createTextNode(item);
             eventP.appendChild(eventNode);
             selection[startIndex].appendChild(eventP);
+          })
 
-          });
-
-          //format data
           selection[startIndex].firstChild.classList.add('title');
           selection[startIndex].lastChild.classList.add('body');
           selection[startIndex].style.wordWrap = 'break-word';
 
-          //format divs based on time range
           for (var i = startIndex*1; i < endIndex; i++) {
-            selection[i].style.backgroundColor = '#e6eeff';
+             selection[i].style.backgroundColor = '#e6eeff';
           }
         });
       }
