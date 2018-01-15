@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', setup);
 
+let dataStorage = {};
+
 //retrieve current date info
 const today = new Date();
 const dd = today.getDate();
@@ -50,7 +52,7 @@ function setup () {
 
   //check local storage, fill in data based on saved events
   checkForData();
-
+  
   //add event listener for onclick content
   document.querySelectorAll('.rightside-column-content').forEach(item => item.addEventListener('click', revealModal));
 };
@@ -93,8 +95,7 @@ function revealModal (item) {
   }
 };
 
-function addEventToData (e) {
-  e.stopPropagation();
+function addEventToData () {
 
   //access data from form
   const form = document.querySelector('form');
@@ -127,14 +128,14 @@ function addEventToData (e) {
   let dateCode = `${dataDD}/${dateMonth}`;
 
   //if the dateCode already exists, just add the new data.  otherwise create dateCode
-  if (!DATA) {
-    DATA[dateCode] = [];
-    DATA[dateCode].push(dataArray)
-  } else if (!DATA[dateCode]) {
-    DATA[dateCode] = [];
-    DATA[dateCode].push(dataArray)
+  if (!dataStorage) {
+    dataStorage[dateCode] = [];
+    dataStorage[dateCode].push(dataArray)
+  } else if (!dataStorage[dateCode]) {
+    dataStorage[dateCode] = [];
+    dataStorage[dateCode].push(dataArray)
   } else {
-    DATA[dateCode].push(dataArray)
+    dataStorage[dateCode].push(dataArray)
   }
 
   //add the data to local storage
@@ -181,15 +182,17 @@ function addEventToDom (dataArray) {
 }
 
 function checkForData () {
-  DATA2 = JSON.parse(localStorage.getItem('DATA'));
-  console.log(DATA2);
+  let currentStorage = localStorage.getItem('DATA');
+  console.log(currentStorage);
+  let dataStorage = JSON.parse(currentStorage);
+  console.log(dataStorage);
 
   //if local storage is empty, return
-  if(!DATA2) {
+  if(!dataStorage) {
     return;
   }
 
-  Object.entries(DATA2).forEach(array => {
+  Object.entries(dataStorage).forEach(array => {
     console.log(array);
 
     document.querySelectorAll('.date').forEach(div => {
