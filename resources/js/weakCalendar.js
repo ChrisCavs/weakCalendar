@@ -1,8 +1,5 @@
 document.addEventListener('DOMContentLoaded', setup);
 
-//set up object to receive data
-let DATA = {};
-
 //retrieve current date info
 const today = new Date();
 const dd = today.getDate();
@@ -96,14 +93,21 @@ function revealModal (item) {
   }
 };
 
-function addEventToData () {
+function addEventToData (e) {
+  e.stopPropagation();
+
   //access data from form
-  let form = document.querySelector('form');
-  let eventData = form.elements.event.value;
-  let detailsData = form.elements.details.value;
-  let timeStartData = form.elements.timestart.value;
-  let timeEndData = form.elements.timeend.value;
-  let dataArray = [eventData, detailsData, timeStartData, timeEndData];
+  const form = document.querySelector('form');
+  const eventData = form.elements.event.value;
+  const detailsData = form.elements.details.value;
+  const timeStartData = form.elements.timestart.value;
+  const timeEndData = form.elements.timeend.value;
+  const dataArray = [eventData, detailsData, timeStartData, timeEndData];
+
+  //asign a value to empty values (fix JSON parsing)
+  if (detailsData == '') {
+    dataArray[1] = '-';
+  };
 
   //if timestart=timeend, alert the user
   if (timeStartData == timeEndData) {
@@ -123,20 +127,21 @@ function addEventToData () {
   let dateCode = `${dataDD}/${dateMonth}`;
 
   //if the dateCode already exists, just add the new data.  otherwise create dateCode
-  if (!DATA[dateCode]) {
+  if (!DATA) {
     DATA[dateCode] = [];
-    DATA[dateCode].push(
-      [timeStartData, dataArray]
-    )
+    DATA[dateCode].push(dataArray)
+  } else if (!DATA[dateCode]) {
+    DATA[dateCode] = [];
+    DATA[dateCode].push(dataArray)
   } else {
-    DATA[dateCode].push(
-      [timeStartData, dataArray]
-    )
-  };
+    DATA[dateCode].push(dataArray)
+  }
 
   //add the data to local storage
   let JStrings = JSON.stringify(DATA);
   localStorage.setItem('DATA', JStrings);
+  console.log(JStrings);
+  console.log(JSON.parse(localStorage.getItem('DATA')));
 
   //pass data to 'addeventtodom' function
   addEventToDom(dataArray);
@@ -176,15 +181,16 @@ function addEventToDom (dataArray) {
 }
 
 function checkForData () {
-  DATA = JSON.parse(localStorage.getItem('DATA'));
+  DATA2 = JSON.parse(localStorage.getItem('DATA'));
+  console.log(DATA2);
 
   //if local storage is empty, return
-  if(!DATA) {
-    DATA = {};
+  if(!DATA2) {
     return;
   }
 
-  Object.entries(DATA).forEach(array => {
+  Object.entries(DATA2).forEach(array => {
+    console.log(array);
 
     document.querySelectorAll('.date').forEach(div => {
 
@@ -196,16 +202,21 @@ function checkForData () {
         const selection = rightSideColumn.getElementsByTagName('div');
 
         array[1].forEach(timeStamp => {
-          const domData = timeStamp[1].splice(0,2);
-          const startIndex = timeArray.indexOf(timeStamp[1][0]);
-          const endIndex = timeArray.indexOf(timeStamp[1][1]);
+          console.log(timeStamp)
+          const domData = timeStamp.splice(0,2);
+          const startIndex = timeArray.indexOf(timeStamp[2]);
+          console.log(timeStamp[2]);
+          console.log(startIndex);
+          const endIndex = timeArray.indexOf(timeStamp[3]);
 
           //write data into appropriate div
           domData.forEach(item => {
+            console.log(item);
             const eventP = document.createElement('p');
             const eventNode = document.createTextNode(item);
             eventP.appendChild(eventNode);
             selection[startIndex].appendChild(eventP);
+
           });
 
           //format data
