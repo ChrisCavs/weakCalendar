@@ -55,7 +55,30 @@ function setup () {
 
   //add event listener for onclick content
   document.querySelectorAll('.rightside-column-content').forEach(item => item.addEventListener('click', revealModal));
+
+  //add event listeners on buttons
+  document.querySelector('.plus-week').addEventListener('click', addToWeek);
+  document.querySelector('.minus-week').addEventListener('click', subtractFromWeek);
+
+  document.querySelector('.plusmonth').addEventListener('click', addToMonth);
+  document.querySelector('.minus-month').addEventListener('click', subtractFromMonth);
 };
+
+function addToWeek () {
+
+}
+
+function subtractFromWeek () {
+
+}
+
+function addToMonth () {
+
+}
+
+function subtractFromMonth () {
+  
+}
 
 function revealModal (item) {
   item.stopPropagation();
