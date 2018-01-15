@@ -105,9 +105,10 @@ function addEventToData () {
   const timeEndData = form.elements.timeend.value;
   const dataArray = [eventData, detailsData, timeStartData, timeEndData];
 
-  //asign a value to empty values (fix JSON parsing)
+  //if details is empty, alert user
   if (detailsData == '') {
-    dataArray[1] = '-';
+    alert('Details is a required field');
+    return;
   };
 
   //if timestart=timeend, alert the user
