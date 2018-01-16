@@ -14,15 +14,15 @@ const weekArray = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 const timeArray = ['730am', '800am', '830am', '900am', '930am', '1000am', '1030am', '1100am', '1130am', '1200pm', '1230pm', '100pm', '130pm', '200pm', '230pm', '300pm', '330pm', '400pm', '430pm', '500pm', '530pm', '600pm'];
 
 //place the current day in the week
-const splitDate = today.toString().split(' ');
-const currentDay = splitDate[0]; // as in mon, tue, wed
-const dateDay = splitDate[2]; // as in 01, 21, 30
+let splitDate = today.toString().split(' ');
+let currentDay = splitDate[0]; // as in mon, tue, wed
+let dateDay = splitDate[2]; // as in 01, 21, 30
 
-const dateMonth = monthArray[mm];
-const dateDayIndex = weekArray.indexOf(currentDay);
+let dateMonth = monthArray[mm];
+let dateDayIndex = weekArray.indexOf(currentDay);
 
 const timeZone = splitDate[5].substring(0,6);
-const currentDayTag = "." + currentDay;
+let currentDayTag = "." + currentDay;
 
 function setup () {
   //add current month to top of page
@@ -68,14 +68,19 @@ function addToWeek () {
   const nextWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate()+7);
   console.log(nextWeek);
 
-  //assign new month to top of page
-  if (nextWeek.split(' ')[2] < dateDay) {
+  splitDate = today.toString().split(' ');
+  currentDay = splitDate[0]; // as in mon, tue, wed
+  dateDay = splitDate[2]; // as in 01, 21, 30
+  dateDayIndex = weekArray.indexOf(currentDay);
+
+  //assign new month to month variable if next week enters new month
+  if (nextWeek.toString().split(' ')[2] < dateDay) {
     if (monthArray.indexOf(dateMonth) == 11) {
       const newMonthIndex = 0;
     } else {
       const newMonthIndex = monthArray.indexOf(dateMonth) + 1;
     }
-    document.querySelector('.header-monthof').innerHTML = monthArray[newMonthIndex];
+    dateMonth = monthArray[newMonthIndex];
   }
 
   //assign dates to subheader + subheader class
