@@ -47,7 +47,7 @@ function setup () {
     let totalDaysInMonth = monthArrayDays[monthArray.indexOf(dateMonth)]
     
     if (thisDate > totalDaysInMonth) {
-      thisDate = thisDate - totalDaysInMonth
+      thisDate = thisDate - totalDaysInMonth;
     };
     
     day.innerHTML = thisDate;
@@ -80,10 +80,23 @@ function setup () {
   //add event listeners on buttons
   document.querySelector('.plus-week').addEventListener('click', addToWeek);
   document.querySelector('.minus-week').addEventListener('click', subtractFromWeek);
-
   document.querySelector('.plus-month').addEventListener('click', addToMonth);
   document.querySelector('.minus-month').addEventListener('click', subtractFromMonth);
+  
+  //listener on header title (to reset to default view)
+  document.querySelector('.header-title').addEventListener('click', defaultView);
 };
+
+function defaultView () {
+  splitDate = today.toString().split(' ');
+  currentDay = splitDate[0]; // as in mon, tue, wed
+  dateDayIndex = weekArray.indexOf(currentDay);
+  dateDay = splitDate[2]; // as in 01, 21, 30
+
+  dateMonth = monthArray[today.getMonth()];
+  
+  setup();
+}
 
 function addToWeek () {
   counterWeek++;
@@ -265,8 +278,8 @@ function checkForData () {
 
     Array.from(document.querySelectorAll('.date')).forEach(div => {
 
-      //looking for matches between our DATA keys and our subheader classes
-      if (div.classList.contains(key.split('/')[0])) {
+      //looking for matches between our DATA keys and our subheader classes + month header
+      if (div.classList.contains(key.split('/')[0]) && document.querySelector('.header-monthof').innerHTML == key.split('/')[1]) {
 
         //when there's a match, find the appropriate column to write the data
         const rightSideColumn = document.querySelector(`.rightside .${div.innerHTML.slice(0,3)}`);
