@@ -11,7 +11,7 @@ const mm = today.getMonth();
 const yyyy = today.getFullYear();
 
 const monthArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-const monthArrayDay = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+const monthArrayDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 const weekArray = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 const timeArray = ['730am', '800am', '830am', '900am', '930am', '1000am', '1030am', '1100am', '1130am', '1200pm', '1230pm', '100pm', '130pm', '200pm', '230pm', '300pm', '330pm', '400pm', '430pm', '500pm', '530pm', '600pm'];
 
@@ -42,9 +42,16 @@ function setup () {
   }
 
   //assign dates to subheader + subheader class
-  document.querySelectorAll('.date span').forEach(day => {
+  Array.from(document.querySelectorAll('.date span')).forEach(day => {
     let thisDate = (dateDay*1) + (weekArray.indexOf(day.classList.value) - dateDayIndex);
+    let totalDaysInMonth = monthArrayDays[monthArray.indexOf(dateMonth)]
+    
+    if (thisDate > totalDaysInMonth) {
+      thisDate = thisDate - totalDaysInMonth
+    };
+    
     day.innerHTML = thisDate;
+    
     if (day.parentElement.classList.length < 2) {
       day.parentElement.classList.add(thisDate);
     } else {
@@ -55,7 +62,7 @@ function setup () {
 
   //generate empty rightside divs for content, if they have not already been generated
   if (document.querySelector('.rightside-column').getElementsByTagName('div').length < 22) {
-    document.querySelectorAll('.rightside-column').forEach(item => {
+    Array.from(document.querySelectorAll('.rightside-column')).forEach(item => {
       for (var i = 0; i < 22; i++) {
         let contentPiece = document.createElement('div');
         contentPiece.className = 'rightside-column-content';
@@ -68,7 +75,7 @@ function setup () {
   checkForData();
 
   //add event listener for onclick content
-  document.querySelectorAll('.rightside-column-content').forEach(item => item.addEventListener('click', revealModal));
+  Array.from(document.querySelectorAll('.rightside-column-content')).forEach(item => item.addEventListener('click', revealModal));
 
   //add event listeners on buttons
   document.querySelector('.plus-week').addEventListener('click', addToWeek);
@@ -117,6 +124,7 @@ function subtractFromMonth () {
 function revealModal (item) {
   item.stopPropagation();
   const rightSide = document.querySelector('.rightside');
+  
   if (Array.from(rightSide.classList).includes('pause')) return //prevent click event while in modal
 
   if (item.target.classList.length > 1) return //prevent mouse-drag
@@ -147,7 +155,7 @@ function revealModal (item) {
     document.querySelector('.modal').style.display = 'none';
     highlightedCell.remove('highlighted');
     window.setTimeout(function () {
-      document.querySelector('.rightside').classList.remove('pause');
+      rightSide.classList.remove('pause');
     }, 10);
   }
 };
@@ -255,7 +263,7 @@ function checkForData () {
 
   myDATA.forEach(key => { 
 
-    document.querySelectorAll('.date').forEach(div => {
+    Array.from(document.querySelectorAll('.date')).forEach(div => {
 
       //looking for matches between our DATA keys and our subheader classes
       if (div.classList.contains(key.split('/')[0])) {
