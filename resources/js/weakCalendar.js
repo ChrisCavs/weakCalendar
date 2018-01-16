@@ -21,17 +21,17 @@ const dateDay = splitDate[2]; // as in 01, 21, 30
 const dateMonth = monthArray[mm];
 const dateDayIndex = weekArray.indexOf(currentDay);
 
+const timeZone = splitDate[5].substring(0,6);
+const currentDayTag = "." + currentDay;
 
 function setup () {
   //add current month to top of page
   document.querySelector('.header-monthof').innerHTML = dateMonth;
 
   //format timezone
-  const timeZone = splitDate[5].substring(0,6);
   document.querySelector('.timezone').innerHTML = timeZone;
 
   //place current day in week, highlight that day
-  currentDayTag = "." + currentDay;
   document.querySelector(currentDayTag).parentElement.style.color = '#ff3333';
 
   //assign dates to subheader + subheader class
@@ -60,12 +60,33 @@ function setup () {
   document.querySelector('.plus-week').addEventListener('click', addToWeek);
   document.querySelector('.minus-week').addEventListener('click', subtractFromWeek);
 
-  document.querySelector('.plusmonth').addEventListener('click', addToMonth);
+  document.querySelector('.plus-month').addEventListener('click', addToMonth);
   document.querySelector('.minus-month').addEventListener('click', subtractFromMonth);
 };
 
 function addToWeek () {
+  const nextWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate()+7);
+  console.log(nextWeek);
 
+  //assign new month to top of page
+  if (nextWeek.split(' ')[2] < dateDay) {
+    if (monthArray.indexOf(dateMonth) == 11) {
+      const newMonthIndex = 0;
+    } else {
+      const newMonthIndex = monthArray.indexOf(dateMonth) + 1;
+    }
+    document.querySelector('.header-monthof').innerHTML = monthArray[newMonthIndex];
+  }
+
+  //assign dates to subheader + subheader class
+  document.querySelectorAll('.date span').forEach(day => {
+    let thisDate = (dateDay*1) + (weekArray.indexOf(day.classList.value) - dateDayIndex);
+    day.innerHTML = thisDate;
+    day.parentElement.classList.add(thisDate);
+  });
+
+  //if current day is in new week, highlight it
+  //document.querySelector(currentDayTag).parentElement.style.color = '#ff3333';
 }
 
 function subtractFromWeek () {
@@ -77,7 +98,7 @@ function addToMonth () {
 }
 
 function subtractFromMonth () {
-  
+
 }
 
 function revealModal (item) {
