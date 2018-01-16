@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', setup);
 
 let dataStorage = {};
 let counterWeek = 0;
-let counterMonth = 0;
 
 //retrieve current date info
 const today = new Date();
@@ -29,13 +28,12 @@ let currentDayTag = "." + currentDay;
 function setup () {
   //add current month to top of page
   document.querySelector('.header-monthof').innerHTML = dateMonth;
-  console.log(dateMonth);
 
   //format timezone
   document.querySelector('.timezone').innerHTML = timeZone;
 
   //place current day in week, highlight that day if in subheader
-  if (today.toString().split(' ')[2] == dateDay) {
+  if (today.toString().split(' ')[2] == dateDay && dateMonth == monthArray[today.getMonth()]) {
     document.querySelector(currentDayTag).parentElement.style.color = '#ff3333';
   } else {
     document.querySelector(currentDayTag).parentElement.style.color = '';
@@ -80,14 +78,14 @@ function setup () {
   //add event listeners on buttons
   document.querySelector('.plus-week').addEventListener('click', addToWeek);
   document.querySelector('.minus-week').addEventListener('click', subtractFromWeek);
-  document.querySelector('.plus-month').addEventListener('click', addToMonth);
-  document.querySelector('.minus-month').addEventListener('click', subtractFromMonth);
   
   //listener on header title (to reset to default view)
   document.querySelector('.header-title').addEventListener('click', defaultView);
 };
 
 function defaultView () {
+  counterWeek = 0;
+  
   splitDate = today.toString().split(' ');
   currentDay = splitDate[0]; // as in mon, tue, wed
   dateDayIndex = weekArray.indexOf(currentDay);
@@ -106,7 +104,7 @@ function addToWeek () {
   currentDay = splitDate[0]; // as in mon, tue, wed
   dateDayIndex = weekArray.indexOf(currentDay);
   dateDay = splitDate[2]; // as in 01, 21, 30
-
+  
   dateMonth = monthArray[nextWeek.getMonth()];
   
   setup();
@@ -115,7 +113,7 @@ function addToWeek () {
 function subtractFromWeek () {
   counterWeek--;
   const nextWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate()+(7*counterWeek));
-  
+
   splitDate = nextWeek.toString().split(' ');
   currentDay = splitDate[0]; // as in mon, tue, wed
   dateDayIndex = weekArray.indexOf(currentDay);
@@ -124,14 +122,6 @@ function subtractFromWeek () {
   dateMonth = monthArray[nextWeek.getMonth()];
   
   setup();
-}
-
-function addToMonth () {
-
-}
-
-function subtractFromMonth () {
-
 }
 
 function revealModal (item) {
@@ -205,28 +195,18 @@ function addEventToData () {
   const highlighted = document.querySelector('.highlighted');
   const dataDD = dateDay*1 + (weekArray.indexOf(highlighted.parentElement.className.slice(17,20))-dateDayIndex);
   let dateCode = `${dataDD}/${dateMonth}`;
-  console.log(dateCode);
-  console.log(dateCode.toString());
 
   //if the dateCode already exists, just add the new data.  otherwise create dateCode
-  console.log(dataStorage);
   if (dataStorage[dateCode] === undefined) {
     dataStorage[dateCode] = [];
-    console.log(dataStorage[dateCode]);
     dataStorage[dateCode] = [dataArray]
-    console.log(dataStorage[dateCode]);
   } else {
     dataStorage[dateCode].push(dataArray)
-    console.log(dataStorage[dateCode]);
   }
-
-  console.log(dataStorage);
 
   //add the data to local storage
   let JStrings = JSON.stringify(dataStorage);
   window.localStorage.setItem('DATA', JStrings);
-  console.log(JStrings);
-  console.log(JSON.parse(window.localStorage.getItem('DATA')));
 
   //pass data to 'addeventtodom' function
   addEventToDom(dataArray);
@@ -274,48 +254,57 @@ function checkForData () {
 
   dataStorage = somethingNew;
 
-  myDATA.forEach(key => { 
-
-    Array.from(document.querySelectorAll('.date')).forEach(div => {
+  Array.from(document.querySelectorAll('.date')).forEach(div => {
+  
+    myDATA.forEach(key => {
 
       //looking for matches between our DATA keys and our subheader classes + month header
-      if (div.classList.contains(key.split('/')[0]) && document.querySelector('.header-monthof').innerHTML == key.split('/')[1]) {
-
-        //when there's a match, find the appropriate column to write the data
+      if (div.classList.contains(key.split('/')[0]) 
+      && document.querySelector('.header-monthof').innerHTML == key.split('/')[1]) {
+      
         const rightSideColumn = document.querySelector(`.rightside .${div.innerHTML.slice(0,3)}`);
         const selection = rightSideColumn.getElementsByTagName('div');
-        console.log(somethingNew[key]);
 
         somethingNew[key].forEach(timeStamp => {
-          console.log(timeStamp)
           let domData = timeStamp.slice(0,2);
           let startIndex = timeArray.indexOf(timeStamp[2]);
           let endIndex = timeArray.indexOf(timeStamp[3]);
-
-          domData.forEach(item => {
+          
+          if (selection[startIndex].getElementsByTagName('p').length == 0) {
+        
+            domData.forEach(item => {
             const eventP = document.createElement('p');
             const eventNode = document.createTextNode(item);
             eventP.appendChild(eventNode);
             selection[startIndex].appendChild(eventP);
-          })
+            })
 
-          selection[startIndex].firstChild.classList.add('title');
-          selection[startIndex].lastChild.classList.add('body');
-          selection[startIndex].style.wordWrap = 'break-word';
-
-          for (var i = startIndex*1; i < endIndex; i++) {
-             selection[i].style.backgroundColor = '#e6eeff';
+            selection[startIndex].firstChild.classList.add('title');
+            selection[startIndex].lastChild.classList.add('body');
+            selection[startIndex].style.wordWrap = 'break-word';
+  
+            for (var i = startIndex*1; i < endIndex; i++) {
+               selection[i].style.backgroundColor = '#e6eeff';
+            }
           }
         });
       
-      //if the key does not match a date displayed, make sure each column is clean (applies during week switching)
+      //if no key matches the date, make sure the content column is clean
       } else {
+        
         const rightSideColumn = document.querySelector(`.rightside .${div.innerHTML.slice(0,3)}`);
         
-        //ignore the timezone subheading
-        if (rightSideColumn !== null) {
+        let skipThis = false;
+        
+        myDATA.forEach(key => {
+          if (div.classList.contains(key.split('/')[0])) {
+            skipThis = true;
+          }
+        });
+        
+        //ignore the timezone subheading + ignore columns that match with other keys
+        if (rightSideColumn !== null && skipThis == false) {
           const selection = rightSideColumn.getElementsByTagName('div');
-          console.log(selection);
           
           //delete all the divs
           Array.from(selection).forEach(childDiv => {
@@ -329,7 +318,7 @@ function checkForData () {
             rightSideColumn.appendChild(contentPiece);
           }
         }
-      }
+      };
     });
   });
 }
