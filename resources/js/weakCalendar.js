@@ -43,13 +43,13 @@ function setup () {
   Array.from(document.querySelectorAll('.date span')).forEach(day => {
     let thisDate = (dateDay*1) + (weekArray.indexOf(day.classList.value) - dateDayIndex);
     let totalDaysInMonth = monthArrayDays[monthArray.indexOf(dateMonth)]
-    
+
     if (thisDate > totalDaysInMonth) {
       thisDate = thisDate - totalDaysInMonth;
     };
-    
+
     day.innerHTML = thisDate;
-    
+
     if (day.parentElement.classList.length < 2) {
       day.parentElement.classList.add(thisDate);
     } else {
@@ -78,21 +78,27 @@ function setup () {
   //add event listeners on buttons
   document.querySelector('.plus-week').addEventListener('click', addToWeek);
   document.querySelector('.minus-week').addEventListener('click', subtractFromWeek);
-  
+  document.querySelector('.clear-calendar').addEventListener('click', clearCalendar);
+
   //listener on header title (to reset to default view)
   document.querySelector('.header-title').addEventListener('click', defaultView);
 };
 
+function clearCalendar () {
+  window.localStorage.clear();
+  window.location.reload();
+}
+
 function defaultView () {
   counterWeek = 0;
-  
+
   splitDate = today.toString().split(' ');
   currentDay = splitDate[0]; // as in mon, tue, wed
   dateDayIndex = weekArray.indexOf(currentDay);
   dateDay = splitDate[2]; // as in 01, 21, 30
 
   dateMonth = monthArray[today.getMonth()];
-  
+
   setup();
 }
 
@@ -104,9 +110,9 @@ function addToWeek () {
   currentDay = splitDate[0]; // as in mon, tue, wed
   dateDayIndex = weekArray.indexOf(currentDay);
   dateDay = splitDate[2]; // as in 01, 21, 30
-  
+
   dateMonth = monthArray[nextWeek.getMonth()];
-  
+
   setup();
 }
 
@@ -118,16 +124,16 @@ function subtractFromWeek () {
   currentDay = splitDate[0]; // as in mon, tue, wed
   dateDayIndex = weekArray.indexOf(currentDay);
   dateDay = splitDate[2]; // as in 01, 21, 30
-  
+
   dateMonth = monthArray[nextWeek.getMonth()];
-  
+
   setup();
 }
 
 function revealModal (item) {
   item.stopPropagation();
   const rightSide = document.querySelector('.rightside');
-  
+
   if (Array.from(rightSide.classList).includes('pause')) return //prevent click event while in modal
 
   if (item.target.classList.length > 1) return //prevent mouse-drag
@@ -255,13 +261,13 @@ function checkForData () {
   dataStorage = somethingNew;
 
   Array.from(document.querySelectorAll('.date')).forEach(div => {
-  
+
     myDATA.forEach(key => {
 
       //looking for matches between our DATA keys and our subheader classes + month header
-      if (div.classList.contains(key.split('/')[0]) 
+      if (div.classList.contains(key.split('/')[0])
       && document.querySelector('.header-monthof').innerHTML == key.split('/')[1]) {
-      
+
         const rightSideColumn = document.querySelector(`.rightside .${div.innerHTML.slice(0,3)}`);
         const selection = rightSideColumn.getElementsByTagName('div');
 
@@ -269,9 +275,9 @@ function checkForData () {
           let domData = timeStamp.slice(0,2);
           let startIndex = timeArray.indexOf(timeStamp[2]);
           let endIndex = timeArray.indexOf(timeStamp[3]);
-          
+
           if (selection[startIndex].getElementsByTagName('p').length == 0) {
-        
+
             domData.forEach(item => {
             const eventP = document.createElement('p');
             const eventNode = document.createTextNode(item);
@@ -282,35 +288,35 @@ function checkForData () {
             selection[startIndex].firstChild.classList.add('title');
             selection[startIndex].lastChild.classList.add('body');
             selection[startIndex].style.wordWrap = 'break-word';
-  
+
             for (var i = startIndex*1; i < endIndex; i++) {
                selection[i].style.backgroundColor = '#e6eeff';
             }
           }
         });
-      
+
       //if no key matches the date, make sure the content column is clean
       } else {
-        
+
         const rightSideColumn = document.querySelector(`.rightside .${div.innerHTML.slice(0,3)}`);
-        
+
         let skipThis = false;
-        
+
         myDATA.forEach(key => {
           if (div.classList.contains(key.split('/')[0])) {
             skipThis = true;
           }
         });
-        
+
         //ignore the timezone subheading + ignore columns that match with other keys
         if (rightSideColumn !== null && skipThis == false) {
           const selection = rightSideColumn.getElementsByTagName('div');
-          
+
           //delete all the divs
           Array.from(selection).forEach(childDiv => {
             childDiv.parentNode.removeChild(childDiv);
           });
-          
+
           //place new clean divs in the column
           for (var i = 0; i < 22; i++) {
             let contentPiece = document.createElement('div');
