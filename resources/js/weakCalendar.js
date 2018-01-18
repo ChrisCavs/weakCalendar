@@ -306,7 +306,7 @@ function checkForData () {
     }
     
     //filter for the keys that apply to that date
-    let filteredKeys = myDATA.filter(key => div.classList.contains(key.split('/')[0]));
+    let filteredKeys = myDATA.filter(key => div.classList.contains(key.split('/')[0]) && key.split('/')[1] == dateMonth);
     
     //for each key that applies, write the content
     filteredKeys.forEach(key => {
