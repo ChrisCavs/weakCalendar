@@ -9,6 +9,7 @@ const dd = today.getDate();
 const mm = today.getMonth();
 const yyyy = today.getFullYear();
 
+//useful arrays for indexing
 const monthArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 const monthArrayDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 const weekArray = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
