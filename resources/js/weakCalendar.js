@@ -158,6 +158,7 @@ function subtractFromWeek () {
 
 function revealModal (item) {
   item.stopPropagation();
+  console.log(item);
   const rightSide = document.querySelector('.rightside');
 
   if (Array.from(rightSide.classList).includes('pause')) return; //prevent click event while in modal
@@ -173,6 +174,12 @@ function revealModal (item) {
   //reveal the modal near target location
   let yPosition = item.clientY - 20;
   let xPosition = item.clientX + 30;
+  if (yPosition > 500) {
+    yPosition -= 220;
+  }
+  if (xPosition > 1000) {
+    xPosition -= 300;
+  }
 
   const modal = document.querySelector('.modal');
   const modalContainer = document.querySelector('.modal-container');
