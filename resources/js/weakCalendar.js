@@ -178,7 +178,7 @@ function revealModal (item) {
     yPosition -= 220;
   }
   if (xPosition > 1000) {
-    xPosition -= 300;
+    xPosition -= 280;
   }
 
   const modal = document.querySelector('.modal');
