@@ -42,15 +42,24 @@ function setup () {
 
   //assign dates to subheader + subheader class
   Array.from(document.querySelectorAll('.date span')).forEach(day => {
+    
     let thisDate = (dateDay*1) + (weekArray.indexOf(day.classList.value) - dateDayIndex);
-    let totalDaysInMonth = monthArrayDays[monthArray.indexOf(dateMonth)]
+    let totalDaysInMonth = monthArrayDays[monthArray.indexOf(dateMonth)];
 
+    //adjust when the day passes the current month
     if (thisDate > totalDaysInMonth) {
-      thisDate = thisDate - totalDaysInMonth;
-    };
+      thisDate = Math.abs(thisDate - totalDaysInMonth);
+      console.log(thisDate);
+    }
+    
+    //adjust when days go negative
+    if (thisDate <= 0) {
+      thisDate = thisDate + totalDaysInMonth;
+    }
 
     day.innerHTML = thisDate;
-
+    
+    //add class. if class already exists, remove and replace
     if (day.parentElement.classList.length < 2) {
       day.parentElement.classList.add(thisDate);
     } else {
@@ -83,7 +92,7 @@ function setup () {
 
   //listener on header title (to reset to default view)
   document.querySelector('.header-title').addEventListener('click', defaultView);
-};
+}
 
 function clearCalendar () {
   window.localStorage.clear();
@@ -111,23 +120,36 @@ function addToWeek () {
   currentDay = splitDate[0]; // as in mon, tue, wed
   dateDayIndex = weekArray.indexOf(currentDay);
   dateDay = splitDate[2]; // as in 01, 21, 30
-
-  dateMonth = monthArray[nextWeek.getMonth()];
-
+ 
+  //if the day isn't monday, pull data from monday next week
+  if (currentDay !== 'Mon' && dateMonth !== monthArray[nextWeek.getMonth()]) {
+    const mondayNextWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate()+((7*counterWeek)-dateDayIndex));
+    
+    //check if monday next week is in a new month.  if so, change the month
+    if (monthArray[mondayNextWeek.getMonth()] !== dateMonth) {
+      dateMonth = monthArray[nextWeek.getMonth()];
+      setup();
+    //otherwise, don't change the month
+    } else {
+      setup();
+    }
+  }
+  
   setup();
 }
 
 function subtractFromWeek () {
   counterWeek--;
   const nextWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate()+(7*counterWeek));
+  const mondayNextWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate()+((7*counterWeek)-dateDayIndex));
 
   splitDate = nextWeek.toString().split(' ');
   currentDay = splitDate[0]; // as in mon, tue, wed
   dateDayIndex = weekArray.indexOf(currentDay);
   dateDay = splitDate[2]; // as in 01, 21, 30
-
-  dateMonth = monthArray[nextWeek.getMonth()];
-
+  
+  //unlike addToWeek, we always want the month to switch based on monday of the previous week
+  dateMonth = monthArray[mondayNextWeek.getMonth()];
   setup();
 }
 
@@ -135,9 +157,9 @@ function revealModal (item) {
   item.stopPropagation();
   const rightSide = document.querySelector('.rightside');
 
-  if (Array.from(rightSide.classList).includes('pause')) return //prevent click event while in modal
+  if (Array.from(rightSide.classList).includes('pause')) return; //prevent click event while in modal
 
-  if (item.target.classList.length > 1) return //prevent mouse-drag
+  if (item.target.classList.length > 1) return; //prevent mouse-drag
 
   rightSide.classList.add('pause');
 
@@ -168,7 +190,7 @@ function revealModal (item) {
       rightSide.classList.remove('pause');
     }, 10);
   }
-};
+}
 
 function addEventToData () {
 
@@ -184,7 +206,7 @@ function addEventToData () {
   if (detailsData == '') {
     alert('Details is a required field');
     return;
-  };
+  }
 
   //if timestart=timeend, alert the user
   if (timeStartData == timeEndData) {
@@ -206,9 +228,9 @@ function addEventToData () {
   //if the dateCode already exists, just add the new data.  otherwise create dateCode
   if (dataStorage[dateCode] === undefined) {
     dataStorage[dateCode] = [];
-    dataStorage[dateCode] = [dataArray]
+    dataStorage[dateCode] = [dataArray];
   } else {
-    dataStorage[dateCode].push(dataArray)
+    dataStorage[dateCode].push(dataArray);
   }
 
   //add the data to local storage
@@ -223,7 +245,7 @@ function addEventToDom (dataArray) {
   //set indexes based on time range
   let startIndex = timeArray.indexOf(dataArray[2]);
   let endIndex = timeArray.indexOf(dataArray[3]);
-  let domData = dataArray.slice(0,2)
+  let domData = dataArray.slice(0,2);
   const selection = document.querySelector('.highlighted').parentElement.getElementsByTagName('div');
 
   //write data into appropriate div
@@ -253,6 +275,7 @@ function addEventToDom (dataArray) {
 }
 
 function checkForData () {
+
   let currentStorage = window.localStorage.getItem('DATA');
   let somethingNew = JSON.parse(currentStorage);
 
@@ -261,71 +284,53 @@ function checkForData () {
 
   dataStorage = somethingNew;
 
-  Array.from(document.querySelectorAll('.date')).forEach(div => {
+  //select each date heading (except timezone)
+  Array.from(document.querySelectorAll('.date')).slice(1).forEach(div => {
+    
+    const rightSideColumn = document.querySelector(`.rightside .${div.innerHTML.slice(0,3)}`);
+    const selection = rightSideColumn.getElementsByTagName('div');
+    
+    //delete all the divs in the selection
+    Array.from(selection).forEach(childDiv => {
+      childDiv.parentNode.removeChild(childDiv);
+    });
 
-    myDATA.forEach(key => {
-
-      //looking for matches between our DATA keys and our subheader classes + month header
-      if (div.classList.contains(key.split('/')[0])
-      && document.querySelector('.header-monthof').innerHTML == key.split('/')[1]) {
-
-        const rightSideColumn = document.querySelector(`.rightside .${div.innerHTML.slice(0,3)}`);
-        const selection = rightSideColumn.getElementsByTagName('div');
-
-        somethingNew[key].forEach(timeStamp => {
-          let domData = timeStamp.slice(0,2);
-          let startIndex = timeArray.indexOf(timeStamp[2]);
-          let endIndex = timeArray.indexOf(timeStamp[3]);
-
-          if (selection[startIndex].getElementsByTagName('p').length == 0) {
-
-            domData.forEach(item => {
+    //place new clean divs in the column
+    for (var i = 0; i < 22; i++) {
+      let contentPiece = document.createElement('div');
+      contentPiece.className = 'rightside-column-content';
+      rightSideColumn.appendChild(contentPiece);
+    }
+    
+    //filter for the keys that apply to that date
+    let filteredKeys = myDATA.filter(key => div.classList.contains(key.split('/')[0]));
+    
+    //for each key that applies, write the content
+    filteredKeys.forEach(key => {
+      somethingNew[key].forEach(timeStamp => {
+        let domData = timeStamp.slice(0,2);
+        let startIndex = timeArray.indexOf(timeStamp[2]);
+        let endIndex = timeArray.indexOf(timeStamp[3]);
+        
+        //make sure there isn't already content there
+        if (selection[startIndex].getElementsByTagName('p').length == 0) {
+          
+          domData.forEach(item => {
             const eventP = document.createElement('p');
             const eventNode = document.createTextNode(item);
             eventP.appendChild(eventNode);
             selection[startIndex].appendChild(eventP);
-            })
-
-            selection[startIndex].firstChild.classList.add('title');
-            selection[startIndex].lastChild.classList.add('body');
-            selection[startIndex].style.wordWrap = 'break-word';
-
-            for (var i = startIndex*1; i < endIndex; i++) {
-               selection[i].style.backgroundColor = '#e6eeff';
-            }
-          }
-        });
-
-      //if no key matches the date, make sure the content column is clean
-      } else {
-
-        const rightSideColumn = document.querySelector(`.rightside .${div.innerHTML.slice(0,3)}`);
-
-        let skipThis = false;
-
-        myDATA.forEach(key => {
-          if (div.classList.contains(key.split('/')[0])) {
-            skipThis = true;
-          }
-        });
-
-        //ignore the timezone subheading + ignore columns that match with other keys
-        if (rightSideColumn !== null && skipThis == false) {
-          const selection = rightSideColumn.getElementsByTagName('div');
-
-          //delete all the divs
-          Array.from(selection).forEach(childDiv => {
-            childDiv.parentNode.removeChild(childDiv);
           });
+          
+          selection[startIndex].firstChild.classList.add('title');
+          selection[startIndex].lastChild.classList.add('body');
+          selection[startIndex].style.wordWrap = 'break-word';
 
-          //place new clean divs in the column
-          for (var i = 0; i < 22; i++) {
-            let contentPiece = document.createElement('div');
-            contentPiece.className = 'rightside-column-content';
-            rightSideColumn.appendChild(contentPiece);
+          for (var i = startIndex*1; i < endIndex; i++) {
+             selection[i].style.backgroundColor = '#e6eeff';
           }
         }
-      };
+      });
     });
   });
 }
