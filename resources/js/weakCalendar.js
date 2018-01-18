@@ -74,9 +74,9 @@ function setup () {
   }
 
   //generate empty rightside divs for content, if they have not already been generated
-  if (document.querySelector('.rightside-column').getElementsByTagName('div').length < 22) {
+  if (document.querySelector('.rightside-column').getElementsByTagName('div').length < 26) {
     Array.from(document.querySelectorAll('.rightside-column')).forEach(item => {
-      for (var i = 0; i < 22; i++) {
+      for (var i = 0; i < 26; i++) {
         let contentPiece = document.createElement('div');
         contentPiece.className = 'rightside-column-content';
         item.appendChild(contentPiece);
@@ -299,7 +299,7 @@ function checkForData () {
     });
 
     //place new clean divs in the column
-    for (var i = 0; i < 22; i++) {
+    for (var i = 0; i < 26; i++) {
       let contentPiece = document.createElement('div');
       contentPiece.className = 'rightside-column-content';
       rightSideColumn.appendChild(contentPiece);
