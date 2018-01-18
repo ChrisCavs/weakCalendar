@@ -27,8 +27,6 @@ const timeZone = splitDate[5].substring(0,6);
 let currentDayTag = "." + currentDay;
 
 function setup () {
-  //add current month to top of page
-  document.querySelector('.header-monthof').innerHTML = dateMonth;
 
   //format timezone
   document.querySelector('.timezone').innerHTML = timeZone;
@@ -67,6 +65,13 @@ function setup () {
       day.parentElement.classList.add(thisDate);
     }
   });
+  
+  //add current month to top of page
+  if ((document.querySelectorAll('.date')[1].classList[1])*1 > (document.querySelectorAll('.date')[7].classList[1])*1) {
+    document.querySelector('.header-monthof').innerHTML = `${dateMonth}/${monthArray[monthArray.indexOf(dateMonth) + 1]}`;
+  } else {
+    document.querySelector('.header-monthof').innerHTML = dateMonth;
+  }
 
   //generate empty rightside divs for content, if they have not already been generated
   if (document.querySelector('.rightside-column').getElementsByTagName('div').length < 22) {
@@ -130,8 +135,6 @@ function addToWeek () {
       dateMonth = monthArray[nextWeek.getMonth()];
       setup();
     //otherwise, don't change the month
-    } else {
-      setup();
     }
   }
   
