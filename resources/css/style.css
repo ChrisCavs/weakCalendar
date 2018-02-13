@@ -6,10 +6,6 @@ html {
   margin-left: auto;
   margin-right: auto;
 }
-.content {
-  display: flex;
-  justify-content: space-between;
-}
 button {
   cursor: pointer;
 }
@@ -78,7 +74,11 @@ header span {
   font-weight: normal;
 }
 
-/*=====LEFTSIDE=====*/
+/*=====Content=====*/
+.content {
+  display: flex;
+  justify-content: space-between;
+}
 .leftside {
   width: calc(100%/8);
   display: flex;
@@ -89,8 +89,6 @@ header span {
   height: 54px;
   padding-top: 30px;
 }
-
-/*=====RIGHTSIDE=====*/
 .rightside {
   width: calc(100% - (100%/8));
   display: flex;
