@@ -22,6 +22,7 @@ const main = () => {
     this.currentDayTag = `.${this.currentDay}`
     this.dateDay = this.splitDate[2] //as in 01, 20, 30
     this.dateMonth = this.monthArray[this.mm] //as in january, february
+    this.totalDaysInMonth = this.monthArrayDays[this.monthArray.indexOf(this.dateMonth)] // 31, 28
     this.dateDayIndex = this.weekArray.indexOf(this.currentDay) //as in Mon, Tue
 
     this.timeZone = this.splitDate[5].substring(0,6)

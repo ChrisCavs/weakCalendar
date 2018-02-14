@@ -14,30 +14,30 @@ function setup (dateObject) {
   //assign dates to subheader + subheader class
   Array.from(document.querySelectorAll('.date span')).forEach(day => {
 
-    let thisDate = (dateDay*1) + (weekArray.indexOf(day.classList.value) - dateDayIndex);
-    let totalDaysInMonth = monthArrayDays[monthArray.indexOf(dateMonth)];
+    let thisDate = (dateObject.dateDay*1)
+      + (dateObject.weekArray.indexOf(day.classList.value)
+      - dateObject.dateDayIndex)
 
     //adjust when the day passes the current month
-    if (thisDate > totalDaysInMonth) {
-      thisDate = Math.abs(thisDate - totalDaysInMonth);
-      console.log(thisDate);
-    }
+    thisDate > dateObject.totalDaysInMonth
+      ? thisDate = Math.abs(thisDate - dateObject.totalDaysInMonth)
+      : null
 
     //adjust when days go negative
-    if (thisDate <= 0) {
-      thisDate = thisDate + totalDaysInMonth;
-    }
+    thisDate <= 0
+      ? thisDate = thisDate + dateObject.totalDaysInMonth
+      : null
 
     day.innerHTML = thisDate;
 
     //add class. if class already exists, remove and replace
     if (day.parentElement.classList.length < 2) {
-      day.parentElement.classList.add(thisDate);
+      day.parentElement.classList.add(thisDate)
     } else {
-      day.parentElement.classList.remove(day.parentElement.classList[1]);
-      day.parentElement.classList.add(thisDate);
+      day.parentElement.classList.remove(day.parentElement.classList[1])
+      day.parentElement.classList.add(thisDate)
     }
-  });
+  })
 
   //add current month to top of page
   if ((document.querySelectorAll('.date')[1].classList[1])*1 > (document.querySelectorAll('.date')[7].classList[1])*1) {

@@ -1,103 +1,7 @@
 document.addEventListener('DOMContentLoaded', setup);
 
-let dataStorage = {};
-let counterWeek = 0;
 
-//retrieve current date info
-const today = new Date();
-const dd = today.getDate();
-const mm = today.getMonth();
-const yyyy = today.getFullYear();
 
-//useful arrays for indexing
-const monthArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-const monthArrayDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-const weekArray = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-const timeArray = ['730am', '800am', '830am', '900am', '930am', '1000am', '1030am', '1100am', '1130am', '1200pm', '1230pm', '100pm', '130pm', '200pm', '230pm', '300pm', '330pm', '400pm', '430pm', '500pm', '530pm', '600pm', '630pm', '700pm', '730pm', '800pm', '830pm'];
-
-//globals for rendering page and dates
-let splitDate = today.toString().split(' ');
-let currentDay = splitDate[0]; // as in mon, tue, wed
-let dateDay = splitDate[2]; // as in 01, 21, 30
-
-let dateMonth = monthArray[mm];
-let dateDayIndex = weekArray.indexOf(currentDay);
-
-const timeZone = splitDate[5].substring(0,6);
-let currentDayTag = "." + currentDay;
-
-function setup () {
-
-  //format timezone
-  document.querySelector('.timezone').innerHTML = timeZone;
-
-  //place current day in week, highlight that day if in subheader
-  if (today.toString().split(' ')[2] == dateDay && dateMonth == monthArray[today.getMonth()]) {
-    document.querySelector(currentDayTag).parentElement.style.color = '#ff3333';
-  } else {
-    document.querySelector(currentDayTag).parentElement.style.color = '';
-  }
-
-  //assign dates to subheader + subheader class
-  Array.from(document.querySelectorAll('.date span')).forEach(day => {
-    
-    let thisDate = (dateDay*1) + (weekArray.indexOf(day.classList.value) - dateDayIndex);
-    let totalDaysInMonth = monthArrayDays[monthArray.indexOf(dateMonth)];
-
-    //adjust when the day passes the current month
-    if (thisDate > totalDaysInMonth) {
-      thisDate = Math.abs(thisDate - totalDaysInMonth);
-      console.log(thisDate);
-    }
-    
-    //adjust when days go negative
-    if (thisDate <= 0) {
-      thisDate = thisDate + totalDaysInMonth;
-    }
-
-    day.innerHTML = thisDate;
-    
-    //add class. if class already exists, remove and replace
-    if (day.parentElement.classList.length < 2) {
-      day.parentElement.classList.add(thisDate);
-    } else {
-      day.parentElement.classList.remove(day.parentElement.classList[1]);
-      day.parentElement.classList.add(thisDate);
-    }
-  });
-  
-  //add current month to top of page
-  if ((document.querySelectorAll('.date')[1].classList[1])*1 > (document.querySelectorAll('.date')[7].classList[1])*1) {
-    document.querySelector('.header-monthof').innerHTML = `${dateMonth}/${monthArray[monthArray.indexOf(dateMonth) + 1]}`;
-  } else {
-    document.querySelector('.header-monthof').innerHTML = dateMonth;
-  }
-
-  //generate empty rightside divs for content, if they have not already been generated
-  if (document.querySelector('.rightside-column').getElementsByTagName('div').length < 26) {
-    Array.from(document.querySelectorAll('.rightside-column')).forEach(item => {
-      for (var i = 0; i < 26; i++) {
-        let contentPiece = document.createElement('div');
-        contentPiece.className = 'rightside-column-content';
-        item.appendChild(contentPiece);
-      }
-    });
-  }
-
-  //check local storage, fill in data based on saved events
-  checkForData();
-
-  //add event listener for onclick content
-  Array.from(document.querySelectorAll('.rightside-column-content')).forEach(item => item.addEventListener('click', revealModal));
-
-  //add event listeners on buttons
-  document.querySelector('.plus-week').addEventListener('click', addToWeek);
-  document.querySelector('.minus-week').addEventListener('click', subtractFromWeek);
-  document.querySelector('.clear-calendar').addEventListener('click', clearCalendar);
-
-  //listener on header title (to reset to default view)
-  document.querySelector('.header-title').addEventListener('click', defaultView);
-}
 
 function clearCalendar () {
   window.localStorage.clear();
@@ -125,11 +29,11 @@ function addToWeek () {
   currentDay = splitDate[0]; // as in mon, tue, wed
   dateDayIndex = weekArray.indexOf(currentDay);
   dateDay = splitDate[2]; // as in 01, 21, 30
- 
+
   //if the day isn't monday, pull data from monday next week
   if (currentDay !== 'Mon' && dateMonth !== monthArray[nextWeek.getMonth()]) {
     const mondayNextWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate()+((7*counterWeek)-dateDayIndex));
-    
+
     //check if monday next week is in a new month.  if so, change the month
     if (monthArray[mondayNextWeek.getMonth()] !== dateMonth) {
       dateMonth = monthArray[nextWeek.getMonth()];
@@ -137,7 +41,7 @@ function addToWeek () {
     //otherwise, don't change the month
     }
   }
-  
+
   setup();
 }
 
@@ -150,7 +54,7 @@ function subtractFromWeek () {
   currentDay = splitDate[0]; // as in mon, tue, wed
   dateDayIndex = weekArray.indexOf(currentDay);
   dateDay = splitDate[2]; // as in 01, 21, 30
-  
+
   //unlike addToWeek, we always want the month to switch based on monday of the previous week
   dateMonth = monthArray[mondayNextWeek.getMonth()];
   setup();
@@ -296,10 +200,10 @@ function checkForData () {
 
   //select each date heading (except timezone)
   Array.from(document.querySelectorAll('.date')).slice(1).forEach(div => {
-    
+
     const rightSideColumn = document.querySelector(`.rightside .${div.innerHTML.slice(0,3)}`);
     const selection = rightSideColumn.getElementsByTagName('div');
-    
+
     //delete all the divs in the selection
     Array.from(selection).forEach(childDiv => {
       childDiv.parentNode.removeChild(childDiv);
@@ -311,27 +215,27 @@ function checkForData () {
       contentPiece.className = 'rightside-column-content';
       rightSideColumn.appendChild(contentPiece);
     }
-    
+
     //filter for the keys that apply to that date
     let filteredKeys = myDATA.filter(key => div.classList.contains(key.split('/')[0]) && key.split('/')[1] == dateMonth);
-    
+
     //for each key that applies, write the content
     filteredKeys.forEach(key => {
       somethingNew[key].forEach(timeStamp => {
         let domData = timeStamp.slice(0,2);
         let startIndex = timeArray.indexOf(timeStamp[2]);
         let endIndex = timeArray.indexOf(timeStamp[3]);
-        
+
         //make sure there isn't already content there
         if (selection[startIndex].getElementsByTagName('p').length == 0) {
-          
+
           domData.forEach(item => {
             const eventP = document.createElement('p');
             const eventNode = document.createTextNode(item);
             eventP.appendChild(eventNode);
             selection[startIndex].appendChild(eventP);
           });
-          
+
           selection[startIndex].firstChild.classList.add('title');
           selection[startIndex].lastChild.classList.add('body');
           selection[startIndex].style.wordWrap = 'break-word';
