@@ -1,3 +1,10 @@
+import {checkForData} from './checkForData'
+import {revealModal} from './revealModal'
+import {addToWeek} from './weekControl'
+import {subtractFromWeek} from './weekControl'
+import {defaultView} from './weekControl'
+import {clearCalendar} from './clearCalendar'
+
 function setup (dateObject) {
 
   //format timezone
@@ -40,14 +47,18 @@ function setup (dateObject) {
   })
 
   //add current month to top of page
-  if ((document.querySelectorAll('.date')[1].classList[1])*1 > (document.querySelectorAll('.date')[7].classList[1])*1) {
-    document.querySelector('.header-monthof').innerHTML = `${dateMonth}/${monthArray[monthArray.indexOf(dateMonth) + 1]}`;
-  } else {
-    document.querySelector('.header-monthof').innerHTML = dateMonth;
-  }
+  const dateItems = document.querySelectorAll('.date')
+  const headerMonth = document.querySelector('.header-monthof')
+
+  //detect when two months are in the week range, and adjust
+  dateItems[1].classList[1]*1 > dateItems[7].classList[1]*1
+    ? headerMonth.innerHTML = `
+        ${dataObject.dateMonth}
+        /${dataObject.monthArray[dataObject.monthArray.indexOf(dataObject.dateMonth) + 1]}`
+    : headerMonth.innerHTML = dataObject.dateMonth
 
   //generate empty rightside divs for content, if they have not already been generated
-  const rightSideColumn = Array.from(document.querySelectorAll('.rightside-column'));
+  const rightSideColumn = Array.from(document.querySelectorAll('.rightside-column'))
 
   if (rightSideColumn[0].children.length < 26) {
 
@@ -62,7 +73,7 @@ function setup (dateObject) {
   }
 
   //check local storage, fill in data based on saved events
-  checkForData();
+  checkForData()
 
   //add event listener for onclick content
   Array.from(document.querySelectorAll('.rightside-column-content'))
