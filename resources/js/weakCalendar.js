@@ -3,108 +3,11 @@ document.addEventListener('DOMContentLoaded', setup);
 
 
 
-function clearCalendar () {
-  window.localStorage.clear();
-  window.location.reload();
-}
 
-function defaultView () {
-  counterWeek = 0;
 
-  splitDate = today.toString().split(' ');
-  currentDay = splitDate[0]; // as in mon, tue, wed
-  dateDayIndex = weekArray.indexOf(currentDay);
-  dateDay = splitDate[2]; // as in 01, 21, 30
 
-  dateMonth = monthArray[today.getMonth()];
 
-  setup();
-}
 
-function addToWeek () {
-  counterWeek++;
-  const nextWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate()+(7*counterWeek));
-
-  splitDate = nextWeek.toString().split(' ');
-  currentDay = splitDate[0]; // as in mon, tue, wed
-  dateDayIndex = weekArray.indexOf(currentDay);
-  dateDay = splitDate[2]; // as in 01, 21, 30
-
-  //if the day isn't monday, pull data from monday next week
-  if (currentDay !== 'Mon' && dateMonth !== monthArray[nextWeek.getMonth()]) {
-    const mondayNextWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate()+((7*counterWeek)-dateDayIndex));
-
-    //check if monday next week is in a new month.  if so, change the month
-    if (monthArray[mondayNextWeek.getMonth()] !== dateMonth) {
-      dateMonth = monthArray[nextWeek.getMonth()];
-      setup();
-    //otherwise, don't change the month
-    }
-  }
-
-  setup();
-}
-
-function subtractFromWeek () {
-  counterWeek--;
-  const nextWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate()+(7*counterWeek));
-  const mondayNextWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate()+((7*counterWeek)-dateDayIndex));
-
-  splitDate = nextWeek.toString().split(' ');
-  currentDay = splitDate[0]; // as in mon, tue, wed
-  dateDayIndex = weekArray.indexOf(currentDay);
-  dateDay = splitDate[2]; // as in 01, 21, 30
-
-  //unlike addToWeek, we always want the month to switch based on monday of the previous week
-  dateMonth = monthArray[mondayNextWeek.getMonth()];
-  setup();
-}
-
-function revealModal (item) {
-  item.stopPropagation();
-  console.log(item);
-  const rightSide = document.querySelector('.rightside');
-
-  if (Array.from(rightSide.classList).includes('pause')) return; //prevent click event while in modal
-
-  if (item.target.classList.length > 1) return; //prevent mouse-drag
-
-  rightSide.classList.add('pause');
-
-  //add placeholder on target
-  const highlightedCell = item.target.classList;
-  highlightedCell.add('highlighted');
-
-  //reveal the modal near target location
-  let yPosition = item.clientY - 20;
-  let xPosition = item.clientX + 30;
-  if (yPosition > 500) {
-    yPosition -= 220;
-  }
-  if (xPosition > 1000) {
-    xPosition -= 280;
-  }
-
-  const modal = document.querySelector('.modal');
-  const modalContainer = document.querySelector('.modal-container');
-
-  modalContainer.style.top = `${yPosition}px`;
-  modalContainer.style.left = `${xPosition}px`;
-  modal.style.display = "flex";
-
-  //add listener on modal 'add event' click
-  document.querySelector('.addbutton').addEventListener('click', addEventToData);
-  document.querySelector('.cancelbutton').addEventListener('click', cancelEvent);
-
-  function cancelEvent () {
-    //reset css
-    document.querySelector('.modal').style.display = 'none';
-    highlightedCell.remove('highlighted');
-    window.setTimeout(function () {
-      rightSide.classList.remove('pause');
-    }, 10);
-  }
-}
 
 function addEventToData () {
 

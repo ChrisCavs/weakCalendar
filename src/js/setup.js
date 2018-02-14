@@ -3,7 +3,6 @@ import {revealModal} from './revealModal'
 import {addToWeek} from './weekControl'
 import {subtractFromWeek} from './weekControl'
 import {defaultView} from './weekControl'
-import {clearCalendar} from './clearCalendar'
 
 function setup (dateObject) {
 
@@ -77,12 +76,16 @@ function setup (dateObject) {
 
   //add event listener for onclick content
   Array.from(document.querySelectorAll('.rightside-column-content'))
-    .forEach(item => item.addEventListener('click', revealModal));
+    .forEach(item => item.addEventListener('click', revealModal))
 
   //add event listeners on buttons
   document.querySelector('.plus-week').addEventListener('click', addToWeek);
   document.querySelector('.minus-week').addEventListener('click', subtractFromWeek);
-  document.querySelector('.clear-calendar').addEventListener('click', clearCalendar);
+
+  document.querySelector('.clear-calendar').addEventListener('click', () => {
+    window.localStorage.clear();
+    window.location.reload();
+  })
 
   //listener on header title (to reset to default view)
   document.querySelector('.header-title').addEventListener('click', defaultView);
