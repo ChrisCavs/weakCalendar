@@ -1,23 +1,23 @@
 function checkForData () {
 
-  let currentStorage = window.localStorage.getItem('DATA');
-  let somethingNew = JSON.parse(currentStorage);
+  //pull localStorage
+  let currentStorage = JSON.parse(window.localStorage.getItem('DATA'))
 
-  if(!somethingNew) return;
-  let myDATA = Object.keys(somethingNew);
-
-  dataStorage = somethingNew;
+  //check if storage is empty
+  !currentStorage
+    ? return
+    : myDATA = Object.keys(currentStorage)
 
   //select each date heading (except timezone)
   Array.from(document.querySelectorAll('.date')).slice(1).forEach(div => {
 
-    const rightSideColumn = document.querySelector(`.rightside .${div.innerHTML.slice(0,3)}`);
-    const selection = rightSideColumn.getElementsByTagName('div');
+    const rightSideColumn = document.querySelector(`.rightside .${div.innerHTML.slice(0,3)}`)
+    const selection = rightSideColumn.getElementsByTagName('div')
 
     //delete all the divs in the selection
     Array.from(selection).forEach(childDiv => {
-      childDiv.parentNode.removeChild(childDiv);
-    });
+      childDiv.parentNode.removeChild(childDiv)
+    })
 
     //place new clean divs in the column
     for (var i = 0; i < 26; i++) {
@@ -58,3 +58,5 @@ function checkForData () {
     });
   });
 }
+
+export {checkForData}
