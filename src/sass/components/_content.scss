@@ -1,0 +1,51 @@
+.content {
+  display: flex;
+  justify-content: space-between;
+}
+
+// LEFTSIDE
+
+.leftside {
+  display: flex;
+  flex-direction: column;
+
+  width: calc(100%/8);
+}
+
+.leftside-times {
+  height: 54px;
+  padding-top: 30px;
+
+  text-align: center;
+}
+
+// RIGHTSIDE
+
+.rightside {
+  display: flex;
+  width: calc(100% - (100%/8));
+}
+
+.rightside-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  width: calc(100%/7);
+
+  border-left: 1px solid $grid-blue;
+}
+
+.rightside-column-content {
+  display: flex;
+  flex-direction: column;
+
+  height: 25px;
+  padding: 8px;
+
+  border-bottom: 1px solid $grid-blue;
+}
+
+.highlighted {
+  background-color: $highlight-green;
+}

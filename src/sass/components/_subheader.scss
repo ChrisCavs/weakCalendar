@@ -1,0 +1,22 @@
+.subheader {
+  display: flex;
+  justify-content: space-between;
+
+  border-bottom: 1px solid $grid-blue;
+}
+
+.date {
+  width: calc(100%/8);
+
+  padding: 16px;
+
+  border-left: 1px solid $grid-blue;
+  border-right: 1px solid $grid-blue;
+
+  font-weight: bold;
+}
+
+.timezone {
+  font-weight: normal;
+  color: grey;
+}

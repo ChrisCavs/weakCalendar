@@ -5,8 +5,11 @@
 
 @import "vars";
 @import "base";
-@import "z-index";
 
 // COMPONENTS
 
-// SECTIONS
+@import "./components/header";
+@import "./components/subheader";
+@import "./components/content";
+@import "./components/footer";
+@import "./components/modal";
