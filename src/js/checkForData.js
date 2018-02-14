@@ -1,4 +1,4 @@
-function checkForData () {
+function checkForData (dataObject) {
 
   //pull localStorage
   let currentStorage = JSON.parse(window.localStorage.getItem('DATA'))
@@ -21,42 +21,45 @@ function checkForData () {
 
     //place new clean divs in the column
     for (var i = 0; i < 26; i++) {
-      let contentPiece = document.createElement('div');
-      contentPiece.className = 'rightside-column-content';
-      rightSideColumn.appendChild(contentPiece);
+      let contentPiece = document.createElement('div')
+      contentPiece.className = 'rightside-column-content'
+      rightSideColumn.appendChild(contentPiece)
     }
 
     //filter for the keys that apply to that date
-    let filteredKeys = myDATA.filter(key => div.classList.contains(key.split('/')[0]) && key.split('/')[1] == dateMonth);
+    let filteredKeys = myDATA.filter(key =>
+        div.classList.contains(key.split('/')[0])
+        && key.split('/')[1] == dataObject.dateMonth)
 
     //for each key that applies, write the content
     filteredKeys.forEach(key => {
-      somethingNew[key].forEach(timeStamp => {
-        let domData = timeStamp.slice(0,2);
-        let startIndex = timeArray.indexOf(timeStamp[2]);
-        let endIndex = timeArray.indexOf(timeStamp[3]);
+      myDATA[key].forEach(timeStamp => {
+        let domData = timeStamp.slice(0,2)
+        let startIndex = timeArray.indexOf(timeStamp[2])
+        let endIndex = timeArray.indexOf(timeStamp[3])
 
         //make sure there isn't already content there
-        if (selection[startIndex].getElementsByTagName('p').length == 0) {
+        if (selection[startIndex].getElementsByTagName('p').length === 0) {
 
           domData.forEach(item => {
-            const eventP = document.createElement('p');
-            const eventNode = document.createTextNode(item);
-            eventP.appendChild(eventNode);
-            selection[startIndex].appendChild(eventP);
-          });
+            const eventP = document.createElement('p')
+            const eventNode = document.createTextNode(item)
+            eventP.appendChild(eventNode)
+            selection[startIndex].appendChild(eventP)
+          })
 
-          selection[startIndex].firstChild.classList.add('title');
-          selection[startIndex].lastChild.classList.add('body');
-          selection[startIndex].style.wordWrap = 'break-word';
+          //adjust styles and classes
+          selection[startIndex].firstChild.classList.add('title')
+          selection[startIndex].lastChild.classList.add('body')
+          selection[startIndex].style.wordWrap = 'break-word'
 
           for (var i = startIndex*1; i < endIndex; i++) {
-             selection[i].style.backgroundColor = '#e6eeff';
+             selection[i].style.backgroundColor = '#e6eeff'
           }
         }
-      });
-    });
-  });
+      })
+    })
+  })
 }
 
 export {checkForData}

@@ -72,7 +72,7 @@ function setup (dateObject) {
   }
 
   //check local storage, fill in data based on saved events
-  checkForData()
+  checkForData(dataObject)
 
   //add event listener for onclick content
   Array.from(document.querySelectorAll('.rightside-column-content'))
