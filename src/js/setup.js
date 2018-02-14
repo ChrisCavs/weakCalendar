@@ -1,4 +1,6 @@
-function setup (timeZone, ) {
+function setup (dateObject) {
+
+  console.log(dateObject)
 
   //format timezone
   document.querySelector('.timezone').innerHTML = timeZone;
