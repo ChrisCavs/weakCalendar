@@ -1,16 +1,15 @@
 function setup (dateObject) {
 
-  console.log(dateObject)
-
   //format timezone
-  document.querySelector('.timezone').innerHTML = timeZone;
+  document.querySelector('.timezone').innerHTML = dateObject.timeZone
 
   //place current day in week, highlight that day if in subheader
-  if (today.toString().split(' ')[2] == dateDay && dateMonth == monthArray[today.getMonth()]) {
-    document.querySelector(currentDayTag).parentElement.style.color = '#ff3333';
-  } else {
-    document.querySelector(currentDayTag).parentElement.style.color = '';
-  }
+  const currentDayElement = document.querySelector(dateObject.currentDayTag)
+
+  dateObject.today.toString().split(' ')[2] === dateObject.dateDay
+  && dateObject.dateMonth === dateObject.monthArray[dateObject.today.getMonth()]
+    ? currentDayElement.parentElement.style.color = '#ff3333'
+    : currentDayElement.parentElement.style.color = ''
 
   //assign dates to subheader + subheader class
   Array.from(document.querySelectorAll('.date span')).forEach(day => {
@@ -48,21 +47,26 @@ function setup (dateObject) {
   }
 
   //generate empty rightside divs for content, if they have not already been generated
-  if (document.querySelector('.rightside-column').getElementsByTagName('div').length < 26) {
-    Array.from(document.querySelectorAll('.rightside-column')).forEach(item => {
+  const rightSideColumn = Array.from(document.querySelectorAll('.rightside-column'));
+
+  if (rightSideColumn[0].children.length < 26) {
+
+    rightSideColumn.forEach(item => {
+      //for loop to create 26 empty divs in each column
       for (var i = 0; i < 26; i++) {
         let contentPiece = document.createElement('div');
         contentPiece.className = 'rightside-column-content';
         item.appendChild(contentPiece);
       }
-    });
+    })
   }
 
   //check local storage, fill in data based on saved events
   checkForData();
 
   //add event listener for onclick content
-  Array.from(document.querySelectorAll('.rightside-column-content')).forEach(item => item.addEventListener('click', revealModal));
+  Array.from(document.querySelectorAll('.rightside-column-content'))
+    .forEach(item => item.addEventListener('click', revealModal));
 
   //add event listeners on buttons
   document.querySelector('.plus-week').addEventListener('click', addToWeek);

@@ -2,8 +2,6 @@ import {setup} from './setup'
 
 const main = () => {
 
-  let counterWeek = 0
-
   let dateObject = new function () {
 
     //Date info
@@ -21,17 +19,16 @@ const main = () => {
     //other useful date info
     this.splitDate = this.today.toString().split(' ')
     this.currentDay = this.splitDate[0] //as in mon, tue, wed
+    this.currentDayTag = `.${this.currentDay}`
     this.dateDay = this.splitDate[2] //as in 01, 20, 30
     this.dateMonth = this.monthArray[this.mm] //as in january, february
     this.dateDayIndex = this.weekArray.indexOf(this.currentDay) //as in Mon, Tue
 
     this.timeZone = this.splitDate[5].substring(0,6)
+    this.counterWeek = 0
   }
 
-  console.log(dateOject)
-
   setup(dateObject)
-
 }
 
 document.addEventListener('DOMContentLoaded', main)
