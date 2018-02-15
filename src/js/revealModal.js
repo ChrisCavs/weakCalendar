@@ -1,8 +1,8 @@
 import {addEventToData} from './eventControl'
 
-function revealModal (item) {
+function revealModal (dateObject) {
 
-  item.stopPropagation()
+  event.stopPropagation()
 
   const rightSide = document.querySelector('.rightside')
 
@@ -10,18 +10,18 @@ function revealModal (item) {
   if (Array.from(rightSide.classList).includes('pause')) return;
 
   //prevent mouse-drag
-  if (item.target.classList.length > 1) return
+  if (event.target.classList.length > 1) return
 
   //add pause while modal is up
   rightSide.classList.add('pause')
 
   //add placeholder on target
-  const highlightedCell = item.target.classList
+  const highlightedCell = event.target.classList
   highlightedCell.add('highlighted')
 
   //reveal the modal near target location
-  let yPosition = item.clientY - 20;
-  let xPosition = item.clientX + 30;
+  let yPosition = event.clientY - 20;
+  let xPosition = event.clientX + 30;
   if (yPosition > 500) {
     yPosition -= 220;
   }
@@ -37,8 +37,11 @@ function revealModal (item) {
   modal.style.display = "flex"
 
   //add listener on modal 'add event' click
-  document.querySelector('.addbutton').addEventListener('click', addEventToData)
-  document.querySelector('.cancelbutton').addEventListener('click', cancelEvent)
+  document.querySelector('.addbutton')
+    .addEventListener('click', () => addEventToData(dateObject))
+
+  document.querySelector('.cancelbutton')
+    .addEventListener('click', cancelEvent)
 
   function cancelEvent () {
     //reset css

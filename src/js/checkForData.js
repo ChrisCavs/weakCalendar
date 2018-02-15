@@ -4,9 +4,11 @@ function checkForData (dataObject) {
   let currentStorage = JSON.parse(window.localStorage.getItem('DATA'))
 
   //check if storage is empty
-  !currentStorage
-    ? return
-    : myDATA = Object.keys(currentStorage)
+  if(!currentStorage) {
+    return
+  } else {
+    myDATA = Object.keys(currentStorage)
+  }
 
   //select each date heading (except timezone)
   Array.from(document.querySelectorAll('.date')).slice(1).forEach(div => {

@@ -52,9 +52,9 @@ function setup (dateObject) {
   //detect when two months are in the week range, and adjust
   dateItems[1].classList[1]*1 > dateItems[7].classList[1]*1
     ? headerMonth.innerHTML = `
-        ${dataObject.dateMonth}
-        /${dataObject.monthArray[dataObject.monthArray.indexOf(dataObject.dateMonth) + 1]}`
-    : headerMonth.innerHTML = dataObject.dateMonth
+        ${dateObject.dateMonth}
+        /${dateObject.monthArray[dateObject.monthArray.indexOf(dateObject.dateMonth) + 1]}`
+    : headerMonth.innerHTML = dateObject.dateMonth
 
   //generate empty rightside divs for content, if they have not already been generated
   const rightSideColumn = Array.from(document.querySelectorAll('.rightside-column'))
@@ -72,11 +72,12 @@ function setup (dateObject) {
   }
 
   //check local storage, fill in data based on saved events
-  checkForData(dataObject)
+  checkForData(dateObject)
 
   //add event listener for onclick content
   Array.from(document.querySelectorAll('.rightside-column-content'))
-    .forEach(item => item.addEventListener('click', revealModal))
+    .forEach(item => item
+      .addEventListener('click', () => revealModal(dateObject)))
 
   //add event listeners on buttons
   document.querySelector('.plus-week').addEventListener('click', addToWeek);
