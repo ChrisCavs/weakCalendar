@@ -80,16 +80,18 @@ function setup (dateObject) {
       .addEventListener('click', () => revealModal(dateObject)))
 
   //add event listeners on buttons
-  document.querySelector('.plus-week').addEventListener('click', addToWeek);
-  document.querySelector('.minus-week').addEventListener('click', subtractFromWeek);
+  document.querySelector('.plus-week')
+    .addEventListener('click', () => addToWeek(dateObject))
+  document.querySelector('.minus-week')
+    .addEventListener('click', () => subtractFromWeek(dateObject))
 
   document.querySelector('.clear-calendar').addEventListener('click', () => {
-    window.localStorage.clear();
-    window.location.reload();
+    window.localStorage.clear()
+    window.location.reload()
   })
 
   //listener on header title (to reset to default view)
-  document.querySelector('.header-title').addEventListener('click', defaultView);
+  document.querySelector('.header-title').addEventListener('click', defaultView)
 }
 
 export {setup}
