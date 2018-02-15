@@ -3,10 +3,10 @@ import {constructObject} from './constructObject'
 
 const main = () => {
 
-  //constructor function that will make dateObjects as we go
+  //use constructor to make initial dateObject
+  let dateObject = new constructObject(new Date())
 
-  const dateObject = new constructObject(new Date())
-
+  //run setup
   setup(dateObject)
 }
 

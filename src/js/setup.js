@@ -4,6 +4,11 @@ import {addToWeek} from './weekControl'
 import {subtractFromWeek} from './weekControl'
 import {defaultView} from './weekControl'
 
+//the purpose of setup() is to place key information
+//from our dateObject into the header/subheader,
+//and add event listeners to various parts of the page.
+//setup() is re-run every time we change our dateObject
+
 function setup (dateObject) {
 
   //format timezone

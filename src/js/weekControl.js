@@ -1,11 +1,9 @@
 import {setup} from './setup'
+import {constructObject} from './constructObject'
 
 function defaultView (dateObject) {
-
-  dateObject.counterWeek = 0
-  dateObject.today = new Date()
-
-  setup()
+  let newDateObject = new constructObject(new Date())
+  setup(newDateObject)
 }
 
 function addToWeek (dateObject) {
