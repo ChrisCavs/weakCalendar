@@ -23,6 +23,7 @@
 
 .rightside {
   display: flex;
+
   width: calc(100% - (100%/8));
 }
 
@@ -41,7 +42,7 @@
   flex-direction: column;
 
   height: 25px;
-  padding: 8px;
+  padding: 25px;
 
   border-bottom: 1px solid $grid-blue;
 }
