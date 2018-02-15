@@ -1,11 +1,15 @@
 import {setup} from './setup'
 import {constructObject} from './constructObject'
 
+// create a dateObject idential to what is made in main.js
 function defaultView (dateObject) {
+
   let newDateObject = new constructObject(new Date())
+
   setup(newDateObject)
 }
 
+// create a dateObject one week in the future, run tests, then run setup.js
 function addToWeek (dateObject) {
 
   let counterWeek = dateObject.counterWeek
@@ -19,14 +23,14 @@ function addToWeek (dateObject) {
   const nextWeek = new Date(today.getFullYear(),
                             today.getMonth(),
                             today.getDate()+(7*counterWeek))
-  const newDateObject = new constructObject(nextWeek)
 
-  //modify the counter
+  const newDateObject = new constructObject(nextWeek)
   newDateObject.counterWeek = counterWeek
 
-  //if the day isn't monday, pull data from monday next week
+  //if the day isn't monday, and the month changed, pull data from monday next week
   if (newDateObject.currentDay !== 'Mon'
   && newDateObject.dateMonth !== oldMonth) {
+
     const mondayNextWeek = new Date(today.getFullYear(),
                                     today.getMonth(),
                                     today.getDate()
@@ -43,18 +47,28 @@ function addToWeek (dateObject) {
   setup(newDateObject)
 }
 
+// create a dateObject one week behind, then run setup.js
 function subtractFromWeek (dateObject) {
-  counterWeek--;
-  const nextWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate()+(7*counterWeek));
-  const mondayNextWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate()+((7*counterWeek)-dateDayIndex));
 
-  splitDate = nextWeek.toString().split(' ');
-  currentDay = splitDate[0]; // as in mon, tue, wed
-  dateDayIndex = weekArray.indexOf(currentDay);
-  dateDay = splitDate[2]; // as in 01, 21, 30
+  let counterWeek = dateObject.counterWeek
+  counterWeek--
+
+  //same variables as addToWeek() (but different counter)
+  const today = new Date()
+  const nextWeek = new Date(today.getFullYear(),
+                            today.getMonth(),
+                            today.getDate()+(7*counterWeek))
+
+  const newDateObject = new constructObject(nextWeek)
+  newDateObject.counterWeek = counterWeek
 
   //unlike addToWeek, we always want the month to switch based on monday of the previous week
-  dateMonth = monthArray[mondayNextWeek.getMonth()];
+  const mondayNextWeek = new Date(today.getFullYear(),
+                                  today.getMonth(),
+                                  today.getDate()
+                                    +((7*counterWeek)-newDateObject.dateDayIndex))
+  newDateObject.dateMonth = newDateObject.monthArray[mondayNextWeek.getMonth()]
+  
   setup();
 }
 
