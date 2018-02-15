@@ -9,8 +9,9 @@ function defaultView (dateObject) {
   setup(newDateObject)
 }
 
-// create a dateObject one week in the future, run tests, then run setup.js
+// return a new dateObject one week in the future, run tests
 function addToWeek (dateObject) {
+  console.log('adding')
 
   let counterWeek = dateObject.counterWeek
   counterWeek++
@@ -39,16 +40,17 @@ function addToWeek (dateObject) {
     //if monday next week is in a new month, change the month
     if (newDateObject.monthArray[mondayNextWeek.getMonth()] !== newDateObject.dateMonth) {
       newDateObject.dateMonth = newDateObject.monthArray[mondayNextWeek.getMonth()]
-      setup(newDateObject)
+      return newDateObject
     } else {
       newDateObject.dateMonth = newDateObject.monthArray[newDateObject.mm]
     }
   }
-  setup(newDateObject)
+  return newDateObject
 }
 
-// create a dateObject one week behind, then run setup.js
+// return a dateObject one week behind
 function subtractFromWeek (dateObject) {
+  console.log('subtracting')
 
   let counterWeek = dateObject.counterWeek
   counterWeek--
@@ -69,7 +71,7 @@ function subtractFromWeek (dateObject) {
                                     +((7*counterWeek)-newDateObject.dateDayIndex))
   newDateObject.dateMonth = newDateObject.monthArray[mondayNextWeek.getMonth()]
 
-  setup(newDateObject);
+  return newDateObject
 }
 
 export {addToWeek, subtractFromWeek, defaultView}
