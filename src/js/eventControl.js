@@ -8,6 +8,13 @@ function addEventToData (dateObject) {
   const timeEndData = form.elements.timeend.value
   const dataArray = [eventData, detailsData, timeStartData, timeEndData]
 
+  let dataStorage = JSON.parse(window.localStorage.getItem('DATA'))
+
+  !dataStorage
+    ? dataStorage = {}
+    : null
+
+    console.log(dataStorage)
   //if details is empty, alert user
   if (detailsData === '') {
     alert('Details is a required field')
@@ -32,10 +39,10 @@ function addEventToData (dateObject) {
     + (dateObject.weekArray.indexOf(highlighted.parentElement.className.slice(17,20))
       -dateObject.dateDayIndex)
 
-  let dateCode = `${dataDD}/${dateMonth}`
+  let dateCode = `${dataDD}/${dateObject.dateMonth}`
 
   //if the dateCode already exists, just add the new data.  otherwise create dateCode
-  if (dataStorage[dateCode] === undefined) {
+  if (!dataStorage[dateCode]) {
     dataStorage[dateCode] = []
     dataStorage[dateCode] = [dataArray]
   } else {
@@ -47,10 +54,10 @@ function addEventToData (dateObject) {
   window.localStorage.setItem('DATA', JStrings)
 
   //pass data to 'addeventtodom' function
-  addEventToDom(dataArray)
+  addEventToDom(dataArray, dateObject)
 }
 
-function addEventToDom (dataArray) {
+function addEventToDom (dataArray, dateObject) {
   //set indexes based on time range
   let startIndex = dateObject.timeArray.indexOf(dataArray[2])
   let endIndex = dateObject.timeArray.indexOf(dataArray[3])
