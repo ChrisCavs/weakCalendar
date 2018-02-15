@@ -79,3 +79,5 @@ function addEventToDom (dataArray) {
     document.querySelector('.rightside').classList.remove('pause');
   }, 10);
 }
+
+export {addEventToData}
