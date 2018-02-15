@@ -14,7 +14,6 @@ function addEventToData (dateObject) {
     ? dataStorage = {}
     : null
 
-    console.log(dataStorage)
   //if details is empty, alert user
   if (detailsData === '') {
     alert('Details is a required field')

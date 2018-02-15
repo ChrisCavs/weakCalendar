@@ -1,23 +1,19 @@
 import {setup} from './setup'
 import {constructObject} from './constructObject'
 
-// create a dateObject idential to what is made in main.js
-function defaultView (dateObject) {
+// create a dateObject idential to what is initially made in main.js
+function defaultView () {
 
   let newDateObject = new constructObject(new Date())
 
-  setup(newDateObject)
+  return newDateObject
 }
 
 // return a new dateObject one week in the future, run tests
 function addToWeek (dateObject) {
-  console.log('adding')
 
   let counterWeek = dateObject.counterWeek
   counterWeek++
-
-  //save the dateMonth for comparison
-  const oldMonth = dateObject.dateMonth
 
   //create a new dateObject for next week
   const today = new Date()
@@ -30,7 +26,7 @@ function addToWeek (dateObject) {
 
   //if the day isn't monday, and the month changed, pull data from monday next week
   if (newDateObject.currentDay !== 'Mon'
-  && newDateObject.dateMonth !== oldMonth) {
+  && newDateObject.dateMonth !== dateObject.dateMonth) {
 
     const mondayNextWeek = new Date(today.getFullYear(),
                                     today.getMonth(),
@@ -50,7 +46,6 @@ function addToWeek (dateObject) {
 
 // return a dateObject one week behind
 function subtractFromWeek (dateObject) {
-  console.log('subtracting')
 
   let counterWeek = dateObject.counterWeek
   counterWeek--

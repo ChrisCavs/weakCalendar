@@ -14,13 +14,14 @@ function setup (dateObject) {
   //format timezone
   document.querySelector('.timezone').innerHTML = dateObject.timeZone
 
-  //place current day in week, highlight that day if in subheader
-  const currentDayElement = document.querySelector(dateObject.currentDayTag)
+  //look at currentDay in subheader, check if date matches highlight
+  const possibleHighlight = document.querySelector(dateObject.currentDayTag)
+  const compare = new Date()
+  const compareDay = compare.getDate()
 
-  dateObject.today.toString().split(' ')[2] === dateObject.dateDay
-  && dateObject.dateMonth === dateObject.monthArray[dateObject.today.getMonth()]
-    ? currentDayElement.parentElement.style.color = '#ff3333'
-    : currentDayElement.parentElement.style.color = ''
+  dateObject.dd === compareDay
+    ? possibleHighlight.parentElement.style.color = '#ff3333'
+    : possibleHighlight.parentElement.style.color = ''
 
   //assign dates to subheader + subheader class
   Array.from(document.querySelectorAll('.date span')).forEach(day => {
