@@ -1,4 +1,4 @@
-function checkForData (dataObject) {
+function checkForData (dateObject) {
 
   //pull localStorage
   let currentStorage = JSON.parse(window.localStorage.getItem('DATA'))
@@ -33,20 +33,16 @@ function checkForData (dataObject) {
       //filter for the keys that apply to that date
       let filteredKeys = myDATA.filter(key =>
           div.classList.contains(key.split('/')[0])
-          && key.split('/')[1] == dataObject.dateMonth)
+          && key.split('/')[1] === dateObject.dateMonth)
       console.log(filteredKeys)
 
       //for each key that applies, write the content
-      if (filteredKeys.length === 0) return
-
       filteredKeys.forEach(key => {
 
-        if (!myDATA[key]) return
-
-        myDATA[key].forEach(timeStamp => {
+        currentStorage[key].forEach(timeStamp => {
           let domData = timeStamp.slice(0,2)
-          let startIndex = timeArray.indexOf(timeStamp[2])
-          let endIndex = timeArray.indexOf(timeStamp[3])
+          let startIndex = dateObject.timeArray.indexOf(timeStamp[2])
+          let endIndex = dateObject.timeArray.indexOf(timeStamp[3])
 
           //make sure there isn't already content there
           if (selection[startIndex].getElementsByTagName('p').length === 0) {

@@ -20,7 +20,7 @@ function constructObject (date) {
   this.currentDay = this.splitDate[0] //as in mon, tue, wed
   this.currentDayTag = `.${this.currentDay}`
   this.dateDay = this.splitDate[2] //as in 01, 20, 30
-  this.dateMonth = this.monthArray[this.mm] //as in january, february
+  this.dateMonth = this.monthArray[this.mm] //as in January, February
   this.totalDaysInMonth = this.monthArrayDays[this.monthArray.indexOf(this.dateMonth)] // 31, 28
   this.dateDayIndex = this.weekArray.indexOf(this.currentDay) //as in 0, 1, 2
 
