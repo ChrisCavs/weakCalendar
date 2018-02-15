@@ -68,8 +68,8 @@ function subtractFromWeek (dateObject) {
                                   today.getDate()
                                     +((7*counterWeek)-newDateObject.dateDayIndex))
   newDateObject.dateMonth = newDateObject.monthArray[mondayNextWeek.getMonth()]
-  
-  setup();
+
+  setup(newDateObject);
 }
 
 export {addToWeek, subtractFromWeek, defaultView}
