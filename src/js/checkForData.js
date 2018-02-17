@@ -1,3 +1,5 @@
+//check localstorage for data. write in events based on data
+//this function is run at startup, and also when weeks change
 function checkForData (dateObject) {
 
   //pull localStorage

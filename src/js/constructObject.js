@@ -1,4 +1,4 @@
-//this constructor is used to aggregate key date data that will be used throughout
+//this constructor is used to aggregate key date data that will be used throughout.
 //when cycling through weeks, the constructor is called to get new data
 
 function constructObject (date) {

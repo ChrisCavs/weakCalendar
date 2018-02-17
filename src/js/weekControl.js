@@ -5,7 +5,6 @@ import {constructObject} from './constructObject'
 function defaultView () {
 
   let newDateObject = new constructObject(new Date())
-
   return newDateObject
 }
 
@@ -24,7 +23,7 @@ function addToWeek (dateObject) {
   const newDateObject = new constructObject(nextWeek)
   newDateObject.counterWeek = counterWeek
 
-  //if the day isn't monday, and the month changed, pull data from monday next week
+  //for all days besides monday, if the month changed, pull data from monday next week
   if (newDateObject.currentDay !== 'Mon'
   && newDateObject.dateMonth !== dateObject.dateMonth) {
 

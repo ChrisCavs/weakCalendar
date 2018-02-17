@@ -7,7 +7,7 @@ import {defaultView} from './weekControl'
 // the purpose of setup() is to place key information
 // from our dateObject into the header/subheader,
 // and add event listeners to various parts of the page.
-// setup() is re-run every time we change our dateObject
+// setup() is re-run every time the dateObject is changed.
 
 function setup (dateObject) {
 
@@ -80,7 +80,7 @@ function setup (dateObject) {
   //check local storage, fill in data based on saved events
   checkForData(dateObject)
 
-  //add event listener for onclick content
+  //add event listeners on grid
   Array.from(document.querySelectorAll('.rightside-column-content'))
     .forEach(item => item
       .addEventListener('click', () => revealModal(dateObject)))

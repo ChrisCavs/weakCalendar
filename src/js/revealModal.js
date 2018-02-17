@@ -1,5 +1,8 @@
 import {addEventToData} from './eventControl'
 
+//this function reveals the modal, and enables functionality.
+//a pause is used to prevent activating the function again
+//when clicking on the grid
 function revealModal (dateObject) {
 
   event.stopPropagation()
@@ -47,7 +50,6 @@ function revealModal (dateObject) {
     //reset css
     document.querySelector('.modal').style.display = 'none'
     highlightedCell.remove('highlighted')
-    //do i need this????********************
     window.setTimeout(function () {
       rightSide.classList.remove('pause')
     }, 10)

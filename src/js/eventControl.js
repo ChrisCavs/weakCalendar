@@ -40,7 +40,8 @@ function addEventToData (dateObject) {
 
   let dateCode = `${dataDD}/${dateObject.dateMonth}`
 
-  //if the dateCode already exists, just add the new data.  otherwise create dateCode
+  //if the dateCode already exists, just add the new data.
+  //otherwise add dateCode to data object
   if (!dataStorage[dateCode]) {
     dataStorage[dateCode] = []
     dataStorage[dateCode] = [dataArray]
@@ -57,6 +58,7 @@ function addEventToData (dateObject) {
 }
 
 function addEventToDom (dataArray, dateObject) {
+
   //set indexes based on time range
   let startIndex = dateObject.timeArray.indexOf(dataArray[2])
   let endIndex = dateObject.timeArray.indexOf(dataArray[3])
