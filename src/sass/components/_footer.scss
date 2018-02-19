@@ -1,0 +1,15 @@
+footer {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-text {
+  display: flex;
+  justify-content: space-between;
+
+  padding: 24px 0px;
+  margin-top: 48px;
+  margin-left: 24px;
+
+  border-top: 1px solid $grid-blue;
+}
